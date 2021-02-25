@@ -1,0 +1,19 @@
+{
+  "name": "yaniv",
+  "version": "1.0.0",
+  "description": "best game ever",
+  "main": "main.js",
+  "dependencies": {
+    "card-dealer": "^2.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "yaniv",
+    "asaf"
+  ],
+  "author": "DAAB",
+  "license": "ISC"
+}
