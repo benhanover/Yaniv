@@ -6,6 +6,7 @@
           this.rank = rank;
           this.value = value;
           this.isJoker = isJoker;
+          this.hidden = hidden;
       }
       
       CardName() {

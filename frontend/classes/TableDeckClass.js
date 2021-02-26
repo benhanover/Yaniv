@@ -1,5 +1,6 @@
 import {Deck} from './DeckClass.js';
 import {Card} from './CardClass.js';
+import { Player } from './PlayerClass.js';
 
 
 export default class TableDeck extends Deck{
@@ -9,12 +10,12 @@ export default class TableDeck extends Deck{
     const ranksAndValues =[['Ace',1], ['2',2], ['3',3], ['4' ,4], ['5',5], ['6',6], ['7',7], ['8',8], ['9',9], ['10',10], ['Jack',10], ['Queen',10], ['King',10]];
     for (const sign of signs) {
       for (const rankAndVal of ranksAndValues) {
-        this.cards.push(new Card(sign,rankAndVal[0],rankAndVal[1],false));
+        this.cards.push(new Card(sign,rankAndVal[0],rankAndVal[1], false, true));
       }
 
     }
-    this.cards.push(new Card("Joker","BlackJoker",0,true));
-    this.cards.push(new Card("Joker","RedJoker",0,true));
+    this.cards.push(new Card("Joker", "BlackJoker", 0,true, true));
+    this.cards.push(new Card("Joker", "RedJoker", 0, true, true));
   
   }
 

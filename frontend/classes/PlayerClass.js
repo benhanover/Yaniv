@@ -1,9 +1,11 @@
 export class Player {
-  constructor(playerdeck, name, genderAvatar) {
+  constructor(id, playerdeck, name, avatar) {
+    this.id = id;
     this.playerDeck = playerdeck;
     this.name = name;
     this.score = 0;
-    this.genderAvatar = genderAvatar;
+    this.avatar = avatar;
+  
   }
   // - Player 
   //   - props => playerDeck, name, score, genderAvatar
@@ -15,7 +17,6 @@ export class Player {
 
     // methods to complete
     // ===================
-
     drawPileCard() {
       
     }
