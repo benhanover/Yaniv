@@ -21,7 +21,6 @@ export default class TableDeck extends Deck{
 
   setCards(cards) {
     this.cards = cards;
-    
   }
 
   shuffle() {
