@@ -1,21 +1,23 @@
 import { Card } from './classes/CardClass.js';
 import TableDeck from './classes/TableDeckClass.js';
 import {PileDeck} from './classes/PileDeckClass.js';
+import { Player } from './classes/PlayerClass.js';
+import { Deck } from './classes/DeckClass.js';
 
 
-const deck = new TableDeck();
-const pile = new PileDeck();
-console.log(deck);
-deck.shuffle();
-// console.log(deck);
 
-const hand = deck.dealCards();
-pile.cards.push(...hand);
+// guess a card and run in console.
+    guessACard();
 
-deck.setCards(pile.transitToTableDeck());
-console.log(deck);
-deck.shuffle();
-console.log(deck);
+
+
+
+
+
+
+
+
+
 
 
 
@@ -94,7 +96,7 @@ console.log(deck);
 
 // button 
 
-// loadGameSetup(); // players creation
+loadGameSetup(); // players creation
 // const players = [{player1}, {player2}, {player3}, {player4}];
 // createGame(players) {
 //     while(!winner){
@@ -105,7 +107,7 @@ console.log(deck);
 //         showScore();
 //     }
 
-// }; // Deck => playerDeck TableDeck', 'PileDeck'for each player
+// // }; // Deck => playerDeck TableDeck', 'PileDeck'for each player
 // async function round(players){
 // const currentPlayer = player[0]
 //     while(!Yaniv){
@@ -120,7 +122,11 @@ console.log(deck);
 // callYaniv();
 // chooseCard();
 
-// function removePlayer(player) {
+// function trun(player) {
+//     player.throwCards(cards);
+//     player.drawTableCard(deck.drawCard())
+// }
+// // function removePlayer(player) {
     
 // }
 
@@ -146,6 +152,24 @@ console.log(deck);
       // Use Class name 'Deck', and classes 'PlayerDeck', 'TableDeck', and 'PileDeck' which inherit from 'Deck'.
     
      
+
+
+
+
+
+
+
+
+
+
+      function guessACard() {
+        const deck = new TableDeck();
+        deck.shuffle();
+        const player = new Player([], "Danks", 'male');
+    
+        player.drawTableCard(deck.drawCard());
+        console.log(player.playerDeck[0]);
+    }
       
    
       

@@ -1,23 +1,34 @@
 export class Player {
-  constructor(playerdeck, name, score, genderAvatar) {
+  constructor(playerdeck, name, genderAvatar) {
     this.playerDeck = playerdeck;
     this.name = name;
-    this.score = score;
+    this.score = 0;
     this.genderAvatar = genderAvatar;
   }
   // - Player 
   //   - props => playerDeck, name, score, genderAvatar
   //   - methods => drawTableCard, drawPileCard, throwCards(1card,2cards,3cards,4cards,seria), Yaniv, (stickCard)
   //   - 
-    drawTableCard(deck) {
-      const newCard = deck.drawCard();        // fix after classes fix
-      return newCard;
+    drawTableCard(card) {
+      this.playerDeck.push(...card);        // fix after classes fix
     }
-    drawPileCard(pileDeck) {
-      const newCard = pileDeck.drawCard();        // fix after classes fix
-      return newCard;
-    } 
-  //   throwCards(cardsToThrow) {
+
+    // methods to complete
+    // ===================
+
+    drawPileCard() {
+      
+    }
+
+    throwCards() {  //  !!!! diffuculty level over 9000 !!!!
         
-  //   }
+    }
+
+    Yaniv() {
+
+    }
+
+    stickCards(){
+
+    }
 }
