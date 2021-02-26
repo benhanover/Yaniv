@@ -12,7 +12,7 @@ export class PileDeck extends Deck{
         return newTableDeckCards;
     }
     
-    // tableDeck.cards = pileDeck.cards
-    // tableDeck = pileDeck.transitToTableDeck(tableDeck)
-    // tableDeck
 }
+// tableDeck.cards = pileDeck.cards
+// tableDeck = pileDeck.transitToTableDeck(tableDeck)
+// tableDeck

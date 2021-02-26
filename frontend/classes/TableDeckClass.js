@@ -2,7 +2,7 @@ import {Deck} from './DeckClass.js';
 import {Card} from './CardClass.js';
 
 
-export default class TableDeck extends Deck{
+export class TableDeck extends Deck{
   constructor (){
     super(false);
     const signs = ['heart','club'
@@ -35,14 +35,13 @@ export default class TableDeck extends Deck{
     } 
     this.cards =  newCardsArray;     
   }
-
-
+  
   deal5Cards() {
         const fiveCards =  this.cards.splice(0,5);
         return fiveCards;
   }
-  deal1Card() {
-      const card =  this.cards.splice(0,1);
-      return card;
-  }
+  // deal1Card() {
+  //     const card =  this.cards.splice(0,1);
+  //     return card;
+  // }
 }

@@ -18,4 +18,3 @@ export class Deck {
     }
 }
 
-/////method to upside all the deck
