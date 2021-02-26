@@ -4,17 +4,18 @@ import {Card} from './CardClass.js';
 
 export default class TableDeck extends Deck{
   constructor (){
-    super();
-    const signs = ['heart','club', 'diamond', 'spade'];
+    super(false);
+    const signs = ['heart','club'
+          , 'diamond', 'spade'];
     const ranksAndValues =[['Ace',1], ['2',2], ['3',3], ['4' ,4], ['5',5], ['6',6], ['7',7], ['8',8], ['9',9], ['10',10], ['Jack',10], ['Queen',10], ['King',10]];
     for (const sign of signs) {
       for (const rankAndVal of ranksAndValues) {
-        this.cards.push(new Card(sign,rankAndVal[0],rankAndVal[1],false));
+        this.cards.push(new Card(sign,rankAndVal[0],rankAndVal[1],false, true));
       }
 
     }
-    this.cards.push(new Card("Joker","BlackJoker",0,true));
-    this.cards.push(new Card("Joker","RedJoker",0,true));
+    this.cards.push(new Card("Joker","BlackJoker",0,true, true));
+    this.cards.push(new Card("Joker","RedJoker",0,true, true));
   
   }
 
@@ -33,11 +34,15 @@ export default class TableDeck extends Deck{
       this.cards.splice(index , 1);
     } 
     this.cards =  newCardsArray;     
-    }
+  }
 
 
-    dealCards() {
+  deal5Cards() {
         const fiveCards =  this.cards.splice(0,5);
         return fiveCards;
-    }
+  }
+  deal1Card() {
+      const card =  this.cards.splice(0,1);
+      return card;
+  }
 }

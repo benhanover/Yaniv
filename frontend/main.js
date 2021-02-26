@@ -4,12 +4,44 @@ import {PileDeck} from './classes/PileDeckClass.js';
 import { Player } from './classes/PlayerClass.js';
 import { Deck } from './classes/DeckClass.js';
 
+// let tableDeck = new TableDeck;
+// // playerDeck = tableDeck.deal5Cards();
+// // console.log(playerDeck);
+// let player1 = new Player(tableDeck.deal5Cards);
+// console.log(tableDeck);
+
+// player1.drawTableCard(tableDeck.drawCard());
+// console.log(player1);
+// console.log(tableDeck);
+// // guess a card and run in console.
+//     guessACard(tableDeck);
+
+const tableDeck = new TableDeck();
+const pileDeck = new PileDeck();
+// console.log(tableDeck);
+// console.log(pileDeck);
+// console.log("BREAK1");
+const Ben = new Player(tableDeck.deal5Cards(),"Ben");
+const amit = new Player(tableDeck.deal5Cards(),"amit");
+// console.log(Ben);
+// console.log(tableDeck);
+// console.log("BREAK2");
+let cards = [Ben.playerDeck[2] ,Ben.playerDeck[3]]
+// console.log(cards);
+// console.log("BREAK3");
+Ben.throwCards( cards , pileDeck);
+console.log(Ben);
+console.log(amit);
+Ben.Yaniv([Ben , amit]);
+console.log(Ben);
+console.log(amit);
 
 
-// guess a card and run in console.
-    guessACard();
 
+// pileDeck.cards = tableDeck.deal5Cards();
 
+// Ben.drawCard(tableDeck.drawCard());
+// console.log(Ben);
 
 
 
