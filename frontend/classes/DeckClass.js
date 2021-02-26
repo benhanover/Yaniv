@@ -1,10 +1,20 @@
 export class Deck {
 
-    constructor() {
+    constructor(upside) {
       this.cards = [];
+      this.upside = upside;
     }
+    
+  
     drawCard() {
-        const topCard =  this.cards.splice(0,1);
+      
+      if(this.upside) {
+        const topCard =  this.cards.splice(-1,1);
         return topCard;
+      }else{
+        const topCard = this.cards.splice(0,1);
+        return topCard;
+      }
     }
 }
+

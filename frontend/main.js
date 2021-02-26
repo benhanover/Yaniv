@@ -1,14 +1,11 @@
 // More Features
 // ==============
-// counter to shouw the sum of the players cards.
-
+// counter to show the sum of the players cards.
+//draw card-badname
 
 // imports
-import { Card } from './classes/CardClass.js';
-import TableDeck from './classes/TableDeckClass.js';
-import {PileDeck} from './classes/PileDeckClass.js';
-import { Player } from './classes/PlayerClass.js';
-import { Deck } from './classes/DeckClass.js';
+import { Deck , Player , PileDeck , TableDeck , Card , playersScore } from './export-tomain.js';
+
 import * as Functions from './utils.js';
 
 // elements
@@ -43,62 +40,6 @@ startGameButton.addEventListener('click', (event) => {Functions.renderBoard()})
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// console.log(deck.shuffle());
-// console.log(deck.shuffle());
-//  tasks
-//   1 - create basic deck class with only drawTopCard method
-//   2   - create tableDeck: - constructor, shuffle, dealCards and inherit drawTopCard      !!extend Deck!!
-//   3   - pileDeck - method: transition to tableDeck and inherit drawTopCard
-//   4 - player class diffuclty level its over 9000 !!!!
-//          -   drawTableCard
-//          -   drawPileCard
-//          -   throwCards(1card,2cards,3cards,4cards,seria)
-//          -   Yaniv
-//          -   (stickCard)
-
-
-
-// const deck = new Deck();
-// console.log(deck);
-// deck.Shuffle();
-// deck.Bla();
-// // console.log(deck[0].CardName());
-// console.log(deck.cards);
-// let deck = new Deck();
-// deck.shuffle();
-// player1 = deck.dealCards();
-// player2 = deck.dealCards();
-// player3 = deck.dealCards();
-// player4 = deck.dealCards();
-// console.log(deck);
-
-
-// OBJECTS-
-//   - BOARD 
-//   - (Reminders of cards) Deck => ([cards]);
-//   - PileDeck => ([cards]);
-
-
-
-
-
-// Use Class name 'Card' with properties 'suit': (Spade, Heart, Club, Diamond), 'rank'(A, 1-10, J, Q, K), 'isJocker'(true, false).
-
-// button 
 
 // loadGameSetup(); // players creation
 // const players = [{player1}, {player2}, {player3}, {player4}];
@@ -154,21 +95,6 @@ startGameButton.addEventListener('click', (event) => {Functions.renderBoard()})
 // function renderTable([players], tableDeck, pileDeck);
 
 // Use Class name 'Deck', and classes 'PlayerDeck', 'TableDeck', and 'PileDeck' which inherit from 'Deck'.
-
-
-function loadGameSetup() {
-    const deck = new Deck();
-}
-
-
-
-
-
-
-
-
-
-
 
 
 // // guess a card and run in console.
