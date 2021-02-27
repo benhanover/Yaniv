@@ -3,7 +3,8 @@ import { Deck, Player, PileDeck, TableDeck, Card } from './export-tomain.js';
 
 // Event Listeners:
 // ================
-function addPlayer(event, gameControl) {
+function addPlayer(event, gameControl, addPlayerButton, startGameButton) {
+    
     const nameInput = document.getElementById('player-name');
     const newPlayerName = nameInput.value;
     nameInput.value = "";
@@ -13,10 +14,15 @@ function addPlayer(event, gameControl) {
     const playerId = gameControl.players.length + 1;
     const newPlayer = new Player(playerId, playerDeck, newPlayerName, avatar);
 
-    players.push(newPlayer);
     gameControl.players = players;
-    console.log(gameControl);
+    players.push(newPlayer);
     rednderWelcomePagePlayers(newPlayer);
+    if (players.length == 2) {
+        startGameButton.hidden = false;
+    }
+    else if (players.length === 4) {
+        addPlayerButton.hidden = true;
+    }
 }
 
 
@@ -87,10 +93,16 @@ function render(params) {
 }
 // unshift
 function startGame(gameControl) {
+    
+    const form = catchElement("form-container");
+    form.hidden = true;
 
     let firstToPlayIndex = Math.round(Math.random() * (gameControl.players.lenght - 1));
     let firstPlayer = gameControl.players.splice(firstToPlayIndex, 1)
     gameControl.players.unshift(firstPlayer);
+    // for (let i = 0 ; i < 5 ) {
+    // //    while() 
+    // }
     gameControl.players[0].turn = true;
 }
 //    while(!winner){
@@ -99,8 +111,9 @@ function startGame(gameControl) {
 //         //   -optional removePlayers();
 //         scoreUpdate(players);
 //         showScore();
-//     }}
-function createMainDeck() {
+//     }
+
+function createDesk(){
     const deskContainer = catchElement("desk-container");
     const piledeck = newElement("div", "pile-deck", null, deskContainer);
     const tabeldeck = newElement("div", "tabel-deck", null, deskContainer);
@@ -145,7 +158,6 @@ function renderBoard(gameControl) {
 // name: "bla"
 // playerDeck: (5) [Card, Card, Card, Card, Card]
 // score: 0
-// turn: false
 function createPlayerDiv(player) {
     const playerId = player.id;
     const playerName = player.name;
