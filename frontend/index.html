@@ -1,31 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
+  <head>
     <script defer type="module" src="./main.js"></script>
-    <link rel="stylesheet" href="style.css">
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Yaniv</title>
-</head>
-<body>
+  </head>
+  <body>
     <div id="form-container">
+      <div id="form">
+        <h1 id="welcome-title">Welcome to Yaniv's place!</h1>
+        <input
+          type="text"
+          id="player-name"
+          class="name"
+          placeholder="name"
+        /><br />
+        <input
+          checked
+          type="radio"
+          name="avatar"
+          id="avatar1"
+          value="avatar1"
+        />
+        <label for="avatar1">Avatar1</label><br />
+        <input type="radio" name="avatar" id="avatar1" value="avatar2" />
+        <label for="avatar2">Avatar2</label><br />
+        <input type="radio" name="avatar" id="avatar2" value="avatar3" />
+        <label for="avatar3">Avatar3</label><br />
+        <input type="radio" name="avatar" id="avatar3" value="avatar4" />
+        <label for="avatar4">Avatar4</label><br />
+        <div id="players-container"></div>
+        <button id="add-player-button">Add Player</button>
+        <button hidden id="start-button">Start Game</button>
+      </div>
 
-        <div id="form">
-            <h1 id="welcome-title">Welcome to Yaniv's place!</h1>
-            <input type="text" id="player-name" class="name" placeholder="name"><br>
-            <input checked type="radio" name="avatar" id="avatar1" value="avatar1">
-            <label for="avatar1">Avatar1</label><br>
-            <input type="radio" name="avatar" id="avatar1" value="avatar2">
-            <label for="avatar2">Avatar2</label><br>
-            <input type="radio" name="avatar" id="avatar2" value="avatar3">
-            <label for="avatar3">Avatar3</label><br>
-            <input type="radio" name="avatar" id="avatar3" value="avatar4">
-            <label for="avatar4">Avatar4</label><br>
-            <div id="players-container"></div>
-            <button id="add-player-button">Add Player</button>
-            <button hidden id="start-button">Start Game</button>
-        </div>
+      <div id="desk-container"></div>
     </div>
-</body>
+  </body>
 </html>
