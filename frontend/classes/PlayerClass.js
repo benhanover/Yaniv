@@ -10,29 +10,33 @@ export class Player {
   }
 
   drawCard(card) {
-    this.playerDeck.push(...card);
+    this.playerDeck.push(card);
   }
 
 
-  throwCards(cards, towho) {
-    for (const card of cards) {
-      let currentCard = card.CardName();
-
-      for (const playercard of this.playerDeck) {
-        let playercurrentCard = playercard.CardName()
-
-        if (playercurrentCard === currentCard) {
-
-          let index = this.playerDeck.indexOf(card);
-
-          this.playerDeck.splice(index, 1);
-
-        }
+  throwCards() {
+    const unChosenCards = [];
+    const chosenElements = document.querySelectorAll('.chosen');
+    const chosenCards = [];
+    for (const card of this.playerDeck) {
+      if (card.chosen) {
+        chosenCards.push(card);
+      } else {
+        unChosenCards.push(card);
       }
-      towho.cards.push(...cards);
-      return cards;
     }
+    this.playerDeck = unChosenCards;
+
+    console.log(this.playerDeck);
+    // console.log(chosenCards);
+
+    for (let index = 0; index < chosenElements.length; index++) {
+      chosenCards[index].chooseToggle(chosenElements[index]);
+    }
+    return chosenCards;
+
   }
+
 
   Yaniv(players) {
     for (const player of players) {
@@ -44,11 +48,11 @@ export class Player {
     }
     return "yaniv"
   }
-// Merge the two
+  // Merge the two
   sumHandFirstRound() {
     let sum = 0;
     for (const card of this.playerDeck) {
-        sum += card.value;
+      sum += card.value;
     }
     return sum;
   }
@@ -56,11 +60,11 @@ export class Player {
   sumHand() {
     let sum = 0;
     for (const card of this.playerDeck) {
-        sum += card.value;
+      sum += card.value;
     }
     this.cardSum = sum;
   }
-// Change name
+  // Change name
   resetRoundScoreAndAddToScoreProp() {
     this.score += this.cardSum;
   }

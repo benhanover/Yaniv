@@ -9,10 +9,10 @@ export class Deck {
   drawCard() {
 
     if (this.upside) {
-      const topCard = this.cards.splice(-1, 1);
+      const topCard = this.cards.splice(-1, 1)[0];
       return topCard;
     } else {
-      const topCard = this.cards.splice(0, 1);
+      const topCard = this.cards.splice(0, 1)[0];
       return topCard;
     }
   }

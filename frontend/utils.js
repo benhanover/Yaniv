@@ -65,28 +65,42 @@ function renderWelcomePagePlayers(player) {
 }
 
 function createDesk(gameControl) {
-  const deskContainer = catchElement("desk-container");
-  const pileDeck = newElement("div", "pile-deck", null, deskContainer);
-  pileDeck.innerText = "Pile Deck";
-  pileDeck.style.color = "white";
-  const tableDeck = newElement("div", "table-deck", null, deskContainer);
-  tableDeck.innerText = "Table Deck";
-  pileDeck.addEventListener("click", (event) => {
-    for (const player of gameControl.players) {
-      if (player.turn) {
-        player.drawCard(gameControl.pileDeck.drawCard());
-      }
-    }
-    console.log("pile");
-  });
-  tableDeck.addEventListener("click", (event) => {
-    for (const player of gameControl.players) {
-      if (player.turn) {
-        player.drawCard(gameControl.tableDeck.drawCard());
-        renderBoard(gameControl);
-      }
-    }
-  });
+    const deskContainer = catchElement("desk-container");
+    const pileDeck = newElement("div", "pile-deck", null, deskContainer);
+    pileDeck.innerText = "Pile Deck";
+    pileDeck.style.color = 'white';
+    const tableDeck = newElement("div", "table-deck", null, deskContainer);
+    tableDeck.innerText = "Table Deck";
+    pileDeck.addEventListener("click", (event) => {
+        for (const player of gameControl.players) {
+            if (player.turn) {
+                if (gameControl.pileDeck.cards.length === 0) {
+                    alert("Canot draw card from an empty deck");
+                    return;
+                } else {
+                    player.drawCard(gameControl.pileDeck.drawCard());
+                    const playerThrownCards = player.throwCards();
+                    gameControl.pileDeck.cards.push(...playerThrownCards);
+                    renderBoard(gameControl);
+                }
+            }
+        }
+    });
+
+    tableDeck.addEventListener("click", (event) => {
+        for (const player of gameControl.players) {
+            if (player.turn) {
+                if (gameControl.tableDeck.length === 0) {
+                    alert("Canot draw card from an empty deck");
+                    return;
+                }
+                gameControl.pileDeck.cards.push(...player.throwCards());
+                player.drawCard(gameControl.tableDeck.drawCard());
+                console.log(gameControl.pileDeck.cards);
+                renderBoard(gameControl);
+            }
+        }
+    });
 }
 
 function renderBoard(gameControl) {
@@ -99,37 +113,29 @@ function renderBoard(gameControl) {
 }
 
 function createPlayerDiv(player, playerPosition) {
-  const playerId = player.id;
-  const playerName = player.name;
-  const playerAvatar = player.avatar;
-  const playerScore = player.score;
-  const playerDeck = player.playerDeck;
-  const playerCardsSum = player.cardsSum;
+    const playerId = player.id;
+    const playerName = player.name;
+    const playerAvatar = player.avatar;
+    const playerScore = player.score;
+    const playerDeck = player.playerDeck;
+    const playerCardsSum = player.cardsSum;
 
-  const deskContainer = catchElement("desk-container");
+    const deskContainer = catchElement('desk-container');
 
-  const playerContainer = newElement(
-    "div",
-    "player-container",
-    null,
-    deskContainer
-  );
-  playerContainer.classList.add(playerPosition);
-  newElement("span", "cards-sum-span", playerCardsSum, playerContainer);
+    const playerContainer = newElement('div', 'player-container', null, deskContainer);
+    playerContainer.classList.add(playerPosition);
+    newElement('span', 'cards-sum-span', playerCardsSum, playerContainer);
 
-  // display only cards of the player that has the turn
-  if (player.turn === true) {
-    const playerCards = newElement("div", "player-deck", null, playerContainer);
-    for (let card of playerDeck) {
-      const newCardElement = newElement(
-        "span",
-        "player-card",
-        card.cardName(),
-        playerCards
-      );
-      newCardElement.addEventListener("click", (e) => {
-        card.chooseToggle(newCardElement);
-      });
+    // display only cards of the player that has the turn
+    if (player.turn === true) {
+        const playerCards = newElement('div', 'player-deck', null, playerContainer);
+        for (let card of playerDeck) {
+            const newCardElement = newElement('span', 'player-card', card.cardName(), playerCards);
+            newCardElement.addEventListener('click', (e) => {
+                card.chooseToggle(newCardElement);
+            });
+
+        }
     }
   }
 
@@ -148,15 +154,15 @@ function createPlayerDiv(player, playerPosition) {
 
 // update scoretable with total score and current round score
 // doenst concider yaniv and asaf
-function updateScoreTable(gameControl) {
-  const scoreTable = gameControl.scoreTable;
-  const players = gameControl.players;
-  for (const player of players) {
-    playerRoundScore = player.score - scoreTable.total[player.name];
-    scoreTable.total[player.name] = player.score;
-    scoreTable.currentRound[player.name] = playerRoundScore;
-  }
-  return;
+function updateScoreTable(players) {
+    // need declare this object in gameControl
+    let scoreTable = { total: {}, currentRound: {} };
+    for (const player of players) {
+        playerRoundScore = player.score - scoreTable.total[player.name];
+        scoreTable.total[player.name] = player.score;
+        scoreTable.currentRound[player.name] = playerRoundScore;
+    }
+    return scoreTable;
 }
 
 // resets the hand score of each player and sums it in his score property
@@ -168,42 +174,36 @@ function playersCalculateFinshedRound(players) {
 //()
 // sets the board to a new round
 function newRoundDealing(gameControl) {
-  if (JSON.stringify(gameControl) === JSON.stringify({})) {
-    const players = [];
-    const deck = new TableDeck();
-    deck.shuffle();
-    const pileDeck = new PileDeck();
-    gameControl = {
-      tableDeck: deck,
-      pileDeck: pileDeck,
-      players: players,
-      scoreTable: { total: {}, currentRound: {} },
-    };
-    return gameControl;
-  } else {
-    const deck = new TableDeck();
-    deck.shuffle();
-    const pileDeck = new PileDeck();
-    gameControl.tableDeck = deck;
-    gameControl.pileDeck = pileDeck;
-    for (const player of gameControl.players) {
-      player.playerDeck = gameControl.deck.deal5Cards();
+    if (JSON.stringify(gameControl) === JSON.stringify({})) {
+        const players = [];
+        const deck = new TableDeck();
+        deck.shuffle();
+        const pileDeck = new PileDeck();
+        pileDeck.cards.push(deck.drawCard());
+        gameControl = {
+            tableDeck: deck,
+            pileDeck: pileDeck,
+            players: players
+        };
+        return gameControl;
+    } else {
+        const deck = new TableDeck();
+        deck.shuffle();
+        const pileDeck = new PileDeck();
+        pileDeck.cards.push(deck.drawCard());
+        gameControl.tableDeck = deck;
+        gameControl.pileDeck = pileDeck;
+        for (const player of gameControl.players) {
+            player.playerDeck = gameControl.deck.deal5Cards();
+        }
+        renderBoard(gameControl);
     }
     updateScoreTable(gameControl);
     renderBoard(gameControl);
   }
-}
 
-export {
-  addPlayer,
-  getCheckedAvatar,
-  renderWelcomePagePlayers,
-  guessACard,
-  startGame,
-  createDesk,
-  renderBoard,
-  createPlayerDiv,
-  updateScoreTable,
-  playersCalculateFinshedRound,
-  newRoundDealing,
-};
+
+export { addPlayer, getCheckedAvatar, renderWelcomePagePlayers, guessACard, startGame, createDesk, renderBoard, createPlayerDiv, updateScoreTable, playersCalculateFinshedRound, newRoundDealing };
+
+
+
