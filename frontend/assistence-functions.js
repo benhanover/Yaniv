@@ -1,12 +1,9 @@
-// MOVE
- function hidWelcomePage(){
+function hidWelcomePage() {
     const form = catchElement("form-background");
     form.style.display = 'none';
 
 }
 
-
-// MOVE
 function randomOrderArray(arr) {
     let newArr = [];
     while (arr.length > 0) {
@@ -15,12 +12,12 @@ function randomOrderArray(arr) {
     }
     return newArr
 }
-//move
+
 function catchElement(id) {
     const x = document.getElementById(id);
     return x;
 }
-// MOVE 
+
 function newElement(element, className, content, appendTo, id) {
     const x = document.createElement(element);
     x.classList.add(className);
@@ -30,7 +27,7 @@ function newElement(element, className, content, appendTo, id) {
     return x;
 }
 
-// messing around MOVE
+// messing around
 function guessACard() {
     const deck = new TableDeck();
     deck.shuffle();
@@ -40,7 +37,7 @@ function guessACard() {
     console.log(player.playerDeck[0]);
 }
 
-// returns the checked avatar MOVE
+// returns the checked avatar 
 function getCheckedAvatar() {
     const allAvatars = document.getElementsByName('avatar');
     for (const avatar of allAvatars) {
@@ -50,5 +47,15 @@ function getCheckedAvatar() {
     }
 }
 
+function createPlayerPositions(players) {
+    const possiblePositions = ['current-player', 'left-player', 'top-player', 'right-player']
+    if (players.length === 2) {
+        return [possiblePositions[0], possiblePositions[2]]
+    } else if (players.length === 3) {
+        return [possiblePositions[0], possiblePositions[1], possiblePositions[2]]
+    }
+    return possiblePositions;
+}
 
-export { guessACard , newElement , catchElement, randomOrderArray ,  hidWelcomePage , getCheckedAvatar };
+
+export { guessACard, newElement, catchElement, randomOrderArray, hidWelcomePage, getCheckedAvatar, createPlayerPositions };

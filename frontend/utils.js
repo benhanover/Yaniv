@@ -1,19 +1,14 @@
 import { Deck, Player, PileDeck, TableDeck, Card } from './export-tomain.js';
-import { hidWelcomePage, randomOrderArray, catchElement, newElement, guessACard, getCheckedAvatar } from './assistence-functions.js';
+import { hidWelcomePage, randomOrderArray, catchElement, newElement, guessACard, getCheckedAvatar, createPlayerPositions } from './assistence-functions.js';
 
 
 
 // Event Listeners:
 
 function startGame(gameControl) {
-
-    
     hidWelcomePage();
-    
-
     gameControl.players = randomOrderArray(gameControl.players);
     gameControl.players[0].turn = true;
-
     renderBoard(gameControl);
 }
 
@@ -39,7 +34,6 @@ function addPlayer(event, gameControl, addPlayerButton, startGameButton) {
 }
 
 //   rendering functions :
-
 // render added players to the welcome page
 function renderWelcomePagePlayers(player) {
     const playerContainer = document.getElementById('players-container');
@@ -76,7 +70,6 @@ function createDesk(gameControl) {
         for (const player of gameControl.players) {
             if (player.turn) {
                 player.drawCard(gameControl.pileDeck.drawCard());
-
             }
         }
         console.log("pile");
@@ -115,11 +108,11 @@ function createPlayerDiv(player, playerPosition) {
     newElement('span', 'cards-sum-span', playerCardsSum, playerContainer);
 
     // display only cards of the player that has the turn
-    if(player.turn === true) {
+    if (player.turn === true) {
         const playerCards = newElement('div', 'player-deck', null, playerContainer);
         for (let card of playerDeck) {
             const newCardElement = newElement('span', 'player-card', card.cardName(), playerCards);
-            newCardElement.addEventListener('click', (e)=>{
+            newCardElement.addEventListener('click', (e) => {
                 card.chooseToggle(newCardElement);
             });
 
@@ -137,15 +130,15 @@ function createPlayerDiv(player, playerPosition) {
 
 // update scoretable with total score and current round score
 // doenst concider yaniv and asaf
-function updateScoreTable(players) {
-    // need declare this object in gameControl
-    let scoreTable = { total: {}, currentRound: {} };
-        for (const player of players) {
-            playerRoundScore = player.score - scoreTable.total[player.name];
-            scoreTable.total[player.name] = player.score;
-            scoreTable.currentRound[player.name] = playerRoundScore;
-        }
-        return scoreTable;
+function updateScoreTable(gameControl) {
+    const scoreTable = gameControl.scoreTable;
+    const players = gameControl.players;
+    for (const player of players) {
+        playerRoundScore = player.score - scoreTable.total[player.name];
+        scoreTable.total[player.name] = player.score;
+        scoreTable.currentRound[player.name] = playerRoundScore;
+    }
+    return;
 }
 
 // resets the hand score of each player and sums it in his score property
@@ -157,7 +150,7 @@ function playersCalculateFinshedRound(players) {
 //()
 // sets the board to a new round
 function newRoundDealing(gameControl) {
-    if(JSON.stringify(gameControl) === JSON.stringify({})) {
+    if (JSON.stringify(gameControl) === JSON.stringify({})) {
         const players = [];
         const deck = new TableDeck();
         deck.shuffle();
@@ -165,7 +158,8 @@ function newRoundDealing(gameControl) {
         gameControl = {
             tableDeck: deck,
             pileDeck: pileDeck,
-            players: players
+            players: players,
+            scoreTable: { total: {}, currentRound: {} }
         };
         return gameControl;
     } else {
@@ -174,23 +168,14 @@ function newRoundDealing(gameControl) {
         const pileDeck = new PileDeck();
         gameControl.tableDeck = deck;
         gameControl.pileDeck = pileDeck;
-        for(const player of gameControl.players) {
+        for (const player of gameControl.players) {
             player.playerDeck = gameControl.deck.deal5Cards();
         }
+        updateScoreTable(gameControl)
         renderBoard(gameControl);
     }
 
 }
 
-function createPlayerPositions(players) {
-    const possiblePositions = ['current-player', 'left-player', 'top-player', 'right-player']
-    if (players.length === 2) {
-        return [possiblePositions[0], possiblePositions[2]]
-    } else if (players.length === 3) {
-        return [possiblePositions[0], possiblePositions[1], possiblePositions[2]]
-    }
-    return possiblePositions;
-}
 
-
-export { addPlayer, getCheckedAvatar, renderWelcomePagePlayers, guessACard, startGame, createDesk, renderBoard, createPlayerDiv, newElement, catchElement, randomOrderArray, newRoundDealing }
+export { addPlayer, getCheckedAvatar, renderWelcomePagePlayers, guessACard, startGame, createDesk, renderBoard, createPlayerDiv, updateScoreTable, playersCalculateFinshedRound, newRoundDealing }
