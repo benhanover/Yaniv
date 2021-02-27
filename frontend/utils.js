@@ -98,7 +98,7 @@ function startGame(gameControl) {
 
     // 1 pass to function
     const form = catchElement("form-container");
-    form.hidden = true;
+    form.style.display = 'none';
 
     gameControl.players = randomOrderArray(gameControl.players);
     gameControl.players[0].turn = true;
@@ -109,9 +109,8 @@ function startGame(gameControl) {
 
 function createDesk() {
     const deskContainer = catchElement("desk-container");
-    const decksDiv = newElement("div", "decks-div", null, deskContainer)
-    const piledeck = newElement("div", "pile-deck", null, decksDiv);
-    const tabledeck = newElement("div", "table-deck", null, decksDiv);
+    const piledeck = newElement("div", "pile-deck", null, deskContainer);
+    const tabledeck = newElement("div", "table-deck", null, deskContainer);
     piledeck.addEventListener("click", (gameControl) => {
         for (const player of gameControl.players) {
             if (player.turn) {
