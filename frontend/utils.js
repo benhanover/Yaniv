@@ -7,7 +7,7 @@ import { hidWelcomePage, randomOrderArray, catchElement, newElement, guessACard,
 
 function startGame(gameControl) {
 
-    // 1 pass to function
+    
     hidWelcomePage();
     
 
@@ -64,27 +64,28 @@ function renderWelcomePagePlayers(player) {
 
     playerContainer.appendChild(div);
 }
-
-function createDesk() {
+function createDesk(gameControl) {
     const deskContainer = catchElement("desk-container");
-    const decksDiv = newElement("div", "decks-div", null, deskContainer)
-    const piledeck = newElement("div", "pile-deck", null, decksDiv);
-    const tabledeck = newElement("div", "table-deck", null, decksDiv);
-    piledeck.addEventListener("click", (gameControl) => {
+    const pileDeck = newElement("div", "pile-deck", null, deskContainer);
+    pileDeck.innerText = "Pile Deck";
+    pileDeck.style.color = 'white';
+    const tableDeck = newElement("div", "table-deck", null, deskContainer);
+    tableDeck.innerText = "Table Deck";
+    pileDeck.addEventListener("click", (event, gameControl) => {
+        console.log(gameControl);
         for (const player of gameControl.players) {
             if (player.turn) {
-                player.drawCard(gameControl.piledeck.drawCard());
+                player.drawCard(gameControl.pileDeck.drawCard());
             }
         }
-        renderBoard(gameControl);
     });
-    tabledeck.addEventListener("click", (gameControl) => {
+    tableDeck.addEventListener("click", (event ,gameControl) => {
         for (const player of gameControl.players) {
             if (player.turn) {
-                player.drawCard(gameControl.tabledeck.drawCard());
+                player.drawCard(gameControl.tableDeck.drawCard());
             }
         }
-        renderBoard(gameControl);
+        console.log("table");
     });
 }
 
@@ -94,7 +95,7 @@ function renderBoard(gameControl) {
     for (let index = 0; index < players.length; index++) {
         createPlayerDiv(players[index], playerPositions[index]);
     }
-    createDesk()
+    createDesk(gameControl);
 }
 
 function createPlayerDiv(player, playerPosition) {
@@ -111,14 +112,13 @@ function createPlayerDiv(player, playerPosition) {
     playerContainer.classList.add(playerPosition);
     newElement('span', 'cards-sum-span', playerCardsSum, playerContainer);
 
-    // give player-container class to place in board(left/top/etc..)
-    // hide welcome div
-    
-    const playerCards = newElement('div', 'player-deck', null, playerContainer)
-    console.log(player);
-    for (let card of playerDeck) {
-        const newCardElement = newElement('span', 'player-card', card.cardName(), playerCards);
-        newCardElement.addEventListener('click', newCardElement.chooseToggle);
+    // display only cards of the player that has the turn
+    if(player.turn === true) {
+        const playerCards = newElement('div', 'player-deck', null, playerContainer);
+        for (let card of playerDeck) {
+            const newCardElement = newElement('span', 'player-card', card.cardName(), playerCards);
+            newCardElement.addEventListener('click', newCardElement.chooseToggle);
+        }
     }
 
     const playerProfile = newElement('div', 'player-profile', null, playerContainer)
@@ -162,7 +162,6 @@ function newRoundDealing(gameControl) {
             pileDeck: pileDeck,
             players: players
         };
-        renderBoard(gameControl);
         return gameControl;
     } else {
         const deck = new TableDeck();
