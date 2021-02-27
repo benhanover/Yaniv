@@ -18,7 +18,6 @@ function startGame(gameControl) {
 }
 
 function addPlayer(event, gameControl, addPlayerButton, startGameButton) {
-
     const nameInput = document.getElementById('player-name');
     const newPlayerName = nameInput.value;
     nameInput.value = "";
@@ -30,7 +29,6 @@ function addPlayer(event, gameControl, addPlayerButton, startGameButton) {
 
     gameControl.players = players;
     players.push(newPlayer);
-    console.log(players);
     renderWelcomePagePlayers(newPlayer);
     if (players.length == 2) {
         startGameButton.hidden = false;
@@ -45,8 +43,6 @@ function addPlayer(event, gameControl, addPlayerButton, startGameButton) {
 // render added players to the welcome page
 function renderWelcomePagePlayers(player) {
     const playerContainer = document.getElementById('players-container');
-
-    console.log(player);
     const playerName = player.name;
     const playerAvatar = player.avatar;
     const playerId = player.id;
@@ -165,8 +161,9 @@ function newRoundDealing(gameControl) {
             tableDeck: deck,
             pileDeck: pileDeck,
             players: players
-        }
+        };
         renderBoard(gameControl);
+        return gameControl;
     } else {
         const deck = new TableDeck();
         deck.shuffle();

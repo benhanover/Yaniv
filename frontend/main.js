@@ -4,7 +4,7 @@
 //draw card-badname
 
 // imports
-import { Deck, Player, PileDeck, TableDeck, Card, playersScore } from './export-tomain.js';
+import { Deck, Player, PileDeck, TableDeck, Card} from './export-tomain.js';
 import * as Functions from './utils.js';
 
 // elements
@@ -12,8 +12,9 @@ const addPlayerButton = document.getElementById('add-player-button');
 const startGameButton = document.getElementById('start-button');
 
 // variables
-const gameControl = {};
-newRoundDealing(gameControl);
+const gameControl = Functions.newRoundDealing({});
+console.log(gameControl);
+
 
 // run program
 addPlayerButton.addEventListener('click', (event) => {

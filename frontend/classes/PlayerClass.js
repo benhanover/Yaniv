@@ -1,4 +1,3 @@
-import { cardsCounter } from '../utils.js';
 export class Player {
   constructor(id, playerdeck, name, avatar) {
     this.id = id;
