@@ -97,7 +97,7 @@ function guessACard() {
 function startGame(gameControl) {
 
     // 1 pass to function
-    const form = catchElement("form-container");
+    const form = catchElement("form-background");
     form.style.display = 'none';
 
     gameControl.players = randomOrderArray(gameControl.players);
