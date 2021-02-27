@@ -66,28 +66,28 @@ function renderWelcomePagePlayers(player) {
 }
 
 function createDesk(gameControl) {
-
-const deskContainer = catchElement("desk-container");
+    const deskContainer = catchElement("desk-container");
     const pileDeck = newElement("div", "pile-deck", null, deskContainer);
     pileDeck.innerText = "Pile Deck";
     pileDeck.style.color = 'white';
     const tableDeck = newElement("div", "table-deck", null, deskContainer);
     tableDeck.innerText = "Table Deck";
-    pileDeck.addEventListener("click", (event, gameControl) => {
-        console.log(gameControl);
+    pileDeck.addEventListener("click", (event) => {
         for (const player of gameControl.players) {
             if (player.turn) {
                 player.drawCard(gameControl.pileDeck.drawCard());
+
             }
         }
+        console.log("pile");
     });
-    tableDeck.addEventListener("click", (event ,gameControl) => {
+    tableDeck.addEventListener("click", (event) => {
         for (const player of gameControl.players) {
             if (player.turn) {
                 player.drawCard(gameControl.tableDeck.drawCard());
+                renderBoard(gameControl);
             }
         }
-        console.log("table");
     });
 }
 
@@ -119,7 +119,10 @@ function createPlayerDiv(player, playerPosition) {
         const playerCards = newElement('div', 'player-deck', null, playerContainer);
         for (let card of playerDeck) {
             const newCardElement = newElement('span', 'player-card', card.cardName(), playerCards);
-            newCardElement.addEventListener('click', newCardElement.chooseToggle);
+            newCardElement.addEventListener('click', (e)=>{
+                card.chooseToggle(newCardElement);
+            });
+
         }
     }
 

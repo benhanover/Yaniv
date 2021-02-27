@@ -159,6 +159,11 @@ body {
   padding: 0.2rem;
 }
 
+.current-player .player-deck .chosen {
+  border: solid green;
+  background-color: white;
+}
+
 .current-player .player-profile {
   background-color: yellow;
   display: -webkit-box;

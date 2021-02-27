@@ -99,6 +99,10 @@ h1{
         .player-card{
             padding:0.2rem;
         }
+        .chosen{
+            border: solid green ;
+            background-color: white;
+        }
     }
     .player-profile{
         background-color: yellow;
@@ -106,6 +110,7 @@ h1{
         flex-direction: column;
         padding:0.5rem;
     }
+    
 }
 .left-player {
     background-color: brown;
@@ -249,3 +254,4 @@ h1{
       background-color: rgb(196, 245, 196);
       border-color: lightblue;
   }
+

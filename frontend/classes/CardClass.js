@@ -19,9 +19,15 @@ export class Card {
     get IsJoker() {
         return this.isJoker;
     }
-    choosetoggle() {
-        console.log("this card was toggled!");
+    chooseToggle(cardElement) {
+        console.log(cardElement);
         this.chosen = !this.chosen;
+        if(this.chosen){
+            cardElement.classList.add("chosen");
+        }else{
+            cardElement.classList.remove("chosen");
+        }
+        
     }
     isHidden(boolean) {
         this.hidden = boolean;
