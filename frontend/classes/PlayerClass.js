@@ -7,7 +7,7 @@ export class Player {
     this.score = 0;
     this.avatar = avatar;
     this.turn = false;
-    this.cardsSum = cardsCounter(this.playerDeck);
+    this.cardsSum = this.sumHandFirstRound();
   }
 
   drawCard(card) {
@@ -45,6 +45,28 @@ export class Player {
     }
     return "yaniv"
   }
+// Merge the two
+  sumHandFirstRound() {
+    let sum = 0;
+    for (const card of this.playerDeck) {
+        sum += card.value;
+    }
+    return sum;
+  }
+
+  sumHand() {
+    let sum = 0;
+    for (const card of this.playerDeck) {
+        sum += card.value;
+    }
+    this.cardSum = sum;
+  }
+// Change name
+  resetRoundScoreAndAddToScoreProp() {
+    this.score += this.cardSum;
+  }
+
+
 
   // stickCards(cards){
   //   for (const card of cards) {

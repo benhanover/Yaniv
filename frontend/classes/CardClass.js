@@ -24,9 +24,7 @@ export class Card {
         this.chosen = !this.chosen;
     }
     isHidden(boolean) {
-
         this.hidden = boolean;
-
     }
 
 }

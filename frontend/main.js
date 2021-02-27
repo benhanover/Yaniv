@@ -12,17 +12,10 @@ const addPlayerButton = document.getElementById('add-player-button');
 const startGameButton = document.getElementById('start-button');
 
 // variables
-const players = [];
-const deck = new TableDeck();
-const pileDeck = new PileDeck();
-const gameControl = {
-    tableDeck: deck,
-    pileDeck: pileDeck,
-    players: players,
-}
+const gameControl = {};
+newRoundDealing(gameControl);
 
 // run program
-deck.shuffle();
 addPlayerButton.addEventListener('click', (event) => {
     Functions.addPlayer(event, gameControl, addPlayerButton, startGameButton)
 });

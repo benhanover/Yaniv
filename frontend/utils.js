@@ -1,8 +1,22 @@
 import { Deck, Player, PileDeck, TableDeck, Card } from './export-tomain.js';
+import { hidWelcomePage, randomOrderArray, catchElement, newElement, guessACard, getCheckedAvatar } from './assistence-functions.js';
+
 
 
 // Event Listeners:
-// ================
+
+function startGame(gameControl) {
+
+    // 1 pass to function
+    hidWelcomePage();
+    
+
+    gameControl.players = randomOrderArray(gameControl.players);
+    gameControl.players[0].turn = true;
+
+    renderBoard(gameControl);
+}
+
 function addPlayer(event, gameControl, addPlayerButton, startGameButton) {
 
     const nameInput = document.getElementById('player-name');
@@ -11,14 +25,13 @@ function addPlayer(event, gameControl, addPlayerButton, startGameButton) {
     const playerDeck = gameControl.tableDeck.deal5Cards();
     const avatar = getCheckedAvatar();
     const players = gameControl.players;
-    console.log(players);
     const playerId = gameControl.players.length + 1;
     const newPlayer = new Player(playerId, playerDeck, newPlayerName, avatar);
 
     gameControl.players = players;
     players.push(newPlayer);
     console.log(players);
-    rednderWelcomePagePlayers(newPlayer);
+    renderWelcomePagePlayers(newPlayer);
     if (players.length == 2) {
         startGameButton.hidden = false;
     }
@@ -27,24 +40,10 @@ function addPlayer(event, gameControl, addPlayerButton, startGameButton) {
     }
 }
 
+//   rendering functions :
 
-
-
-
-//    functions :
-// ================
-
-// returns the checked avatar
-function getCheckedAvatar() {
-    const allAvatars = document.getElementsByName('avatar');
-    for (const avatar of allAvatars) {
-        if (avatar.checked) {
-            return avatar.value;
-        }
-    }
-}
 // render added players to the welcome page
-function rednderWelcomePagePlayers(player) {
+function renderWelcomePagePlayers(player) {
     const playerContainer = document.getElementById('players-container');
 
     console.log(player);
@@ -69,43 +68,6 @@ function rednderWelcomePagePlayers(player) {
 
     playerContainer.appendChild(div);
 }
-// messing around
-function guessACard() {
-    const deck = new TableDeck();
-    deck.shuffle();
-    const player = new Player([], "Danks", 'male');
-
-    player.drawTableCard(deck.drawCard());
-    console.log(player.playerDeck[0]);
-}
-
-
-// situations to render:
-// =====================
-// playerDeck:
-//   - after every throwCards().
-//   - after every drawcards().
-//   - 
-//   - count scores.
-//   - 
-
-// 
-// function render(params) {
-
-// }
-
-function startGame(gameControl) {
-
-    // 1 pass to function
-    const form = catchElement("form-container");
-    form.hidden = true;
-
-    gameControl.players = randomOrderArray(gameControl.players);
-    gameControl.players[0].turn = true;
-
-    renderBoard(gameControl);
-}
-
 
 function createDesk() {
     const deskContainer = catchElement("desk-container");
@@ -130,32 +92,15 @@ function createDesk() {
     });
 }
 
-
-function createPlayerPositions(players) {
-    const possiblePossisions = ['current-player', 'left-player', 'top-player', 'right-player']
-    if (players.length === 2) {
-        return [possiblePossisions[0], possiblePossisions[2]]
-    } else if (players.length === 3) {
-        return [possiblePossisions[0], possiblePossisions[1], possiblePossisions[2]]
-    }
-    return possiblePossisions;
-}
-
-
 function renderBoard(gameControl) {
     const players = gameControl.players;
-    const playerPositions = createPlayerPositions(players)
+    const playerPositions = createPlayerPositions(players);
     for (let index = 0; index < players.length; index++) {
         createPlayerDiv(players[index], playerPositions[index]);
     }
     createDesk()
 }
 
-// avatar: "avatar3"
-// id: 1
-// name: "bla"
-// playerDeck: (5) [Card, Card, Card, Card, Card]
-// score: 0
 function createPlayerDiv(player, playerPosition) {
     const playerId = player.id;
     const playerName = player.name;
@@ -172,9 +117,7 @@ function createPlayerDiv(player, playerPosition) {
 
     // give player-container class to place in board(left/top/etc..)
     // hide welcome div
-    // 
-
-
+    
     const playerCards = newElement('div', 'player-deck', null, playerContainer)
     console.log(player);
     for (let card of playerDeck) {
@@ -190,80 +133,63 @@ function createPlayerDiv(player, playerPosition) {
     newElement('span', 'id-span', playerId, playerContainer);
 
 }
-function cardsCounter(playerDeck) {
-    let sum = 0;
-    console.log(playerDeck);
-    for (const card of playerDeck) {
-        sum += card.value;
-    }
-    return sum;
-}
 
-// : Card
-// chosen: false
-// hidden: true
-// isJoker: false
-// rank: "8"
-// suit: "diamond"
-// value: 8
-// CardValue: (...)
-// IsJoker: (...)
-// __proto__:
-// CardName: ƒ CardName()
-
-function newElement(element, className, content, appendTo, id) {
-    const x = document.createElement(element);
-    x.classList.add(className);
-    x.setAttribute("id", id);
-    x.innerText = content;
-    appendTo.append(x);
-    return x;
-}
-
-function catchElement(id) {
-    const x = document.getElementById(id);
-    return x;
-}
-
-function playersScore(players) {
+// update scoretable with total score and current round score
+// doenst concider yaniv and asaf
+function updateScoreTable(players) {
+    // need declare this object in gameControl
     let scoreTable = { total: {}, currentRound: {} };
-    let ROUNDwinners = [];
-    winnerRoundScore = 0;
-    // let winner = {name:null , score: null}
+        for (const player of players) {
+            playerRoundScore = player.score - scoreTable.total[player.name];
+            scoreTable.total[player.name] = player.score;
+            scoreTable.currentRound[player.name] = playerRoundScore;
+        }
+        return scoreTable;
+}
+
+// resets the hand score of each player and sums it in his score property
+function playersCalculateFinshedRound(players) {
     for (const player of players) {
-        let roundScore = 0;
-
-        for (const card of player.playerDeck) {
-            roundScore += card.value;
-        }
-        player.score += roundScore;
-        scoreTable.total[player.name] = player.score;
-        scoreTable.currentRound[player.name] = roundScore;
-        if (roundScore > winnerRoundScore) {
-            winnerRoundScore = roundScore;
-            winner = player.name;
-        } else if (roundScore > winnerRoundScore) {
-
-        }
-
+        player.resetRoundScoreAndAddToScoreProp();
     }
-    console.log(scoreTable);
-    return scoreTable;
 }
-
-function loadGameSetup() {
-    const deck = new Deck();
-}
-
-
-
-function randomOrderArray(arr) {
-    let newArr = [];
-    while (arr.length > 0) {
-        let index = Number(Math.round(Math.random() * (arr.length - 1)));
-        newArr.push(...arr.splice(index, 1));
+//()
+// sets the board to a new round
+function newRoundDealing(gameControl) {
+    if(JSON.stringify(gameControl) === JSON.stringify({})) {
+        const players = [];
+        const deck = new TableDeck();
+        deck.shuffle();
+        const pileDeck = new PileDeck();
+        gameControl = {
+            tableDeck: deck,
+            pileDeck: pileDeck,
+            players: players
+        }
+        renderBoard(gameControl);
+    } else {
+        const deck = new TableDeck();
+        deck.shuffle();
+        const pileDeck = new PileDeck();
+        gameControl.tableDeck = deck;
+        gameControl.pileDeck = pileDeck;
+        for(const player of gameControl.players) {
+            player.playerDeck = gameControl.deck.deal5Cards();
+        }
+        renderBoard(gameControl);
     }
-    return newArr
+
 }
 
-export { addPlayer, getCheckedAvatar, rednderWelcomePagePlayers, guessACard, startGame, createDesk, renderBoard, createPlayerDiv, cardsCounter, newElement, catchElement, playersScore, loadGameSetup, randomOrderArray }
+function createPlayerPositions(players) {
+    const possiblePositions = ['current-player', 'left-player', 'top-player', 'right-player']
+    if (players.length === 2) {
+        return [possiblePositions[0], possiblePositions[2]]
+    } else if (players.length === 3) {
+        return [possiblePositions[0], possiblePositions[1], possiblePositions[2]]
+    }
+    return possiblePositions;
+}
+
+
+export { addPlayer, getCheckedAvatar, renderWelcomePagePlayers, guessACard, startGame, createDesk, renderBoard, createPlayerDiv, newElement, catchElement, randomOrderArray, newRoundDealing }
