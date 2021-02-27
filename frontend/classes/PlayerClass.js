@@ -11,28 +11,25 @@ export class Player {
 
   drawCard(card) {
     this.playerDeck.push(...card);
+    console.log(this.playerDeck);
   }
 
-
-  throwCards(cards, towho) {
-    for (const card of cards) {
-      let currentCard = card.CardName();
-
-      for (const playercard of this.playerDeck) {
-        let playercurrentCard = playercard.CardName()
-
-        if (playercurrentCard === currentCard) {
-
-          let index = this.playerDeck.indexOf(card);
-
-          this.playerDeck.splice(index, 1);
-
-        }
+//
+  throwCards() {
+    let chosenCards = [];
+    console.log(this.playerDeck);
+    for (let i = 0; i < this.playerDeck.length ; i++) {
+      if(this.playerDeck[i].chosen){
+        this.playerDeck[i].chosen = false;
+        let spliced = this.playerDeck.splice(i ,1);
+        chosenCards.push(...spliced);
       }
-      towho.cards.push(...cards);
-      return cards;
     }
+    
+    return chosenCards;
+     
   }
+      
 
   Yaniv(players) {
     for (const player of players) {

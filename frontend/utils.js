@@ -75,16 +75,31 @@ function createDesk(gameControl) {
     pileDeck.addEventListener("click", (event) => {
         for (const player of gameControl.players) {
             if (player.turn) {
-                player.drawCard(gameControl.pileDeck.drawCard());
-
-            }
+                // if(gameControl.pileDeck.cards.length === 0) {
+                //     alert("Canot draw card from an empty deck");
+                //     return;
+                // } else {
+                    // player.drawCard(gameControl.pileDeck.drawCard());
+                    const playerThrownCards = player.throwCards();
+                    console.log(gameControl.pileDeck.cards);
+                    // gameControl.pileDeck.cards.push(...playerThrownCards);
+                    // console.log(gameControl.pileDeck);
+                    // console.log(player.playerDeck);
+                    renderBoard(gameControl);
+                }
+            // }
         }
-        console.log("pile");
     });
     tableDeck.addEventListener("click", (event) => {
         for (const player of gameControl.players) {
             if (player.turn) {
+                if(gameControl.tableDeck.length === 0) {
+                    alert("Canot draw card from an empty deck");
+                    return;
+                } 
+                gameControl.pileDeck.cards.push(...player.throwCards());
                 player.drawCard(gameControl.tableDeck.drawCard());
+                console.log(gameControl.pileDeck.cards);
                 renderBoard(gameControl);
             }
         }
@@ -162,6 +177,8 @@ function newRoundDealing(gameControl) {
         const deck = new TableDeck();
         deck.shuffle();
         const pileDeck = new PileDeck();
+        pileDeck.cards.push(deck.drawCard());
+        console.log(pileDeck.cards);
         gameControl = {
             tableDeck: deck,
             pileDeck: pileDeck,
@@ -172,6 +189,7 @@ function newRoundDealing(gameControl) {
         const deck = new TableDeck();
         deck.shuffle();
         const pileDeck = new PileDeck();
+        pileDeck.cards.push(deck.drawCard());
         gameControl.tableDeck = deck;
         gameControl.pileDeck = pileDeck;
         for(const player of gameControl.players) {
@@ -192,5 +210,6 @@ function createPlayerPositions(players) {
     return possiblePositions;
 }
 
+export { addPlayer, getCheckedAvatar, renderWelcomePagePlayers, guessACard, startGame, createDesk, renderBoard, createPlayerDiv, updateScoreTable, playersCalculateFinshedRound, newRoundDealing };
 
-export { addPlayer, getCheckedAvatar, renderWelcomePagePlayers, guessACard, startGame, createDesk, renderBoard, createPlayerDiv, newElement, catchElement, randomOrderArray, newRoundDealing }
+
