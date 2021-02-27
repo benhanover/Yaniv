@@ -13,7 +13,7 @@ const startGameButton = document.getElementById('start-button');
 
 // variables
 const gameControl = Functions.newRoundDealing({});
-console.log(gameControl);
+
 
 
 // run program

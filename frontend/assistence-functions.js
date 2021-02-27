@@ -1,7 +1,8 @@
 // MOVE
  function hidWelcomePage(){
-    const form = catchElement("form-container");
-    form.hidden = true;
+    const form = catchElement("form-background");
+    form.style.display = 'none';
+
 }
 
 
