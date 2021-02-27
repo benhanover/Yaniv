@@ -7,9 +7,9 @@ import { hidWelcomePage, randomOrderArray, catchElement, newElement, guessACard,
 
 function startGame(gameControl) {
 
-    
+
     hidWelcomePage();
-    
+
 
     gameControl.players = randomOrderArray(gameControl.players);
     gameControl.players[0].turn = true;
@@ -75,28 +75,26 @@ function createDesk(gameControl) {
     pileDeck.addEventListener("click", (event) => {
         for (const player of gameControl.players) {
             if (player.turn) {
-                // if(gameControl.pileDeck.cards.length === 0) {
-                //     alert("Canot draw card from an empty deck");
-                //     return;
-                // } else {
-                    // player.drawCard(gameControl.pileDeck.drawCard());
+                if (gameControl.pileDeck.cards.length === 0) {
+                    alert("Canot draw card from an empty deck");
+                    return;
+                } else {
+                    player.drawCard(gameControl.pileDeck.drawCard());
                     const playerThrownCards = player.throwCards();
-                    console.log(gameControl.pileDeck.cards);
-                    // gameControl.pileDeck.cards.push(...playerThrownCards);
-                    // console.log(gameControl.pileDeck);
-                    // console.log(player.playerDeck);
+                    gameControl.pileDeck.cards.push(...playerThrownCards);
                     renderBoard(gameControl);
                 }
-            // }
+            }
         }
     });
+
     tableDeck.addEventListener("click", (event) => {
         for (const player of gameControl.players) {
             if (player.turn) {
-                if(gameControl.tableDeck.length === 0) {
+                if (gameControl.tableDeck.length === 0) {
                     alert("Canot draw card from an empty deck");
                     return;
-                } 
+                }
                 gameControl.pileDeck.cards.push(...player.throwCards());
                 player.drawCard(gameControl.tableDeck.drawCard());
                 console.log(gameControl.pileDeck.cards);
@@ -130,11 +128,11 @@ function createPlayerDiv(player, playerPosition) {
     newElement('span', 'cards-sum-span', playerCardsSum, playerContainer);
 
     // display only cards of the player that has the turn
-    if(player.turn === true) {
+    if (player.turn === true) {
         const playerCards = newElement('div', 'player-deck', null, playerContainer);
         for (let card of playerDeck) {
             const newCardElement = newElement('span', 'player-card', card.cardName(), playerCards);
-            newCardElement.addEventListener('click', (e)=>{
+            newCardElement.addEventListener('click', (e) => {
                 card.chooseToggle(newCardElement);
             });
 
@@ -155,12 +153,12 @@ function createPlayerDiv(player, playerPosition) {
 function updateScoreTable(players) {
     // need declare this object in gameControl
     let scoreTable = { total: {}, currentRound: {} };
-        for (const player of players) {
-            playerRoundScore = player.score - scoreTable.total[player.name];
-            scoreTable.total[player.name] = player.score;
-            scoreTable.currentRound[player.name] = playerRoundScore;
-        }
-        return scoreTable;
+    for (const player of players) {
+        playerRoundScore = player.score - scoreTable.total[player.name];
+        scoreTable.total[player.name] = player.score;
+        scoreTable.currentRound[player.name] = playerRoundScore;
+    }
+    return scoreTable;
 }
 
 // resets the hand score of each player and sums it in his score property
@@ -172,13 +170,12 @@ function playersCalculateFinshedRound(players) {
 //()
 // sets the board to a new round
 function newRoundDealing(gameControl) {
-    if(JSON.stringify(gameControl) === JSON.stringify({})) {
+    if (JSON.stringify(gameControl) === JSON.stringify({})) {
         const players = [];
         const deck = new TableDeck();
         deck.shuffle();
         const pileDeck = new PileDeck();
         pileDeck.cards.push(deck.drawCard());
-        console.log(pileDeck.cards);
         gameControl = {
             tableDeck: deck,
             pileDeck: pileDeck,
@@ -192,7 +189,7 @@ function newRoundDealing(gameControl) {
         pileDeck.cards.push(deck.drawCard());
         gameControl.tableDeck = deck;
         gameControl.pileDeck = pileDeck;
-        for(const player of gameControl.players) {
+        for (const player of gameControl.players) {
             player.playerDeck = gameControl.deck.deal5Cards();
         }
         renderBoard(gameControl);
