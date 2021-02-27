@@ -64,8 +64,10 @@ function renderWelcomePagePlayers(player) {
 
     playerContainer.appendChild(div);
 }
+
 function createDesk(gameControl) {
-    const deskContainer = catchElement("desk-container");
+
+const deskContainer = catchElement("desk-container");
     const pileDeck = newElement("div", "pile-deck", null, deskContainer);
     pileDeck.innerText = "Pile Deck";
     pileDeck.style.color = 'white';
