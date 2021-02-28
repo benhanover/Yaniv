@@ -30,7 +30,7 @@ body {
     flex-direction: column;
     h1 {
       text-align: center;
-      font-size: 2rem;
+      font-size: 3rem;
       font-family: monospace;
       color: white;
       margin: 0.7rem 0;
@@ -47,8 +47,8 @@ body {
 #desk-container {
   background-color: #e2c57f;
   display: grid;
-  grid-template-columns: 4.5rem 10fr 5fr 2fr 4.5rem;
-  grid-template-rows: 4.5rem 2fr 3.8rem 2fr 4.5rem;
+  grid-template-columns: 9rem 10fr 5fr 2fr 9rem;
+  grid-template-rows: 9rem 2fr 9rem 2fr 9rem;
   position: relative;
   width: 100%;
   height: 100%;
@@ -56,6 +56,24 @@ body {
   #score-table {
     grid-row: 2;
     grid-column: 2;
+  }
+
+  #yaniv-before-button {
+    background-image: url(./assets/yanibefore.jpeg);
+    background-size: cover;
+    width: 100%;
+    grid-row: 5;
+    grid-column: 5;
+    // display: none;
+  }
+
+  #yaniv-after-button {
+    background-image: url(./assets/yaniv.jpeg);
+    background-size: cover;
+    width: 100%;
+    grid-row: 5;
+    grid-column: 5;
+    display: none;
   }
 
   #Yaniv {
@@ -66,10 +84,11 @@ body {
     border: 0.6rem solid black;
   }
   .pile-deck {
-    background-color: rgb(22, 19, 19);
     margin-right: 1rem;
-    width: 2.7rem;
-    height: 3.8rem;
+    background-image: url(./assets/gray_back.png);
+    background-size: cover;
+    width: 6rem;
+    height: 9rem;
     display: flex;
     justify-content: center;
     grid-column: 2/3;
@@ -78,9 +97,10 @@ body {
   }
 
   .table-deck {
-    background-color: rgb(76, 0, 255);
-    width: 2.7rem;
-    height: 3.8rem;
+    background-image: url(./assets/gray_back.png);
+    background-size: cover;
+    width: 6rem;
+    height: 9rem;
     display: flex;
     margin: 0 auto;
     grid-column: 3/4;
@@ -120,7 +140,8 @@ body {
     background-color: yellow;
     display: flex;
     flex-direction: column;
-    padding: 0.5rem;
+    justify-content: center;
+    height: 100%;
   }
 }
 .left-player {
@@ -149,7 +170,8 @@ body {
     background-color: yellow;
     display: flex;
     flex-direction: column;
-    padding: 0.5rem;
+    align-items: center;
+    width: 100%;
   }
 }
 
@@ -181,7 +203,8 @@ body {
     background-color: yellow;
     display: flex;
     flex-direction: column;
-    padding: 0.5rem;
+    justify-content: center;
+    height: 100%;
   }
 }
 .right-player {
@@ -210,13 +233,18 @@ body {
     background-color: yellow;
     display: flex;
     flex-direction: column;
-    padding: 0.5rem;
+    align-items: center;
+    width: 100%;
   }
 }
 
 .player-container {
   .id-span {
     display: none;
+  }
+  img.player-card {
+    width: 12%;
+    height: 100%;
   }
 }
 .right-player,
@@ -231,6 +259,7 @@ body {
   display: flex;
   justify-content: center;
   flex-direction: row;
+  margin-bottom: 30px;
 }
 
 #avatars input[type="radio"] {
@@ -245,14 +274,44 @@ button {
 
 #avatars label {
   display: inline-block;
-  background-color: rgb(228, 206, 206);
+  height: 100%;
+  width: 3rem;
   margin: 0 5px;
-  padding: 10px 10px;
+  padding: 15px 10px;
   font-family: sans-serif, Arial;
   font-size: 10px;
   border: 2px solid #444;
   border-radius: 4px;
 }
+
+.avatar-img1 {
+  background: url(./assets/avatars/horse.jpg) no-repeat;
+  background-size: cover;
+  width: 5rem;
+  height: 6rem;
+}
+
+.avatar-img2 {
+  background: url(./assets/avatars/dog.jpg) no-repeat;
+  background-size: cover;
+  width: 5rem;
+  height: 6rem;
+}
+
+.avatar-img3 {
+  background: url(./assets/avatars/dragon.jpg) no-repeat;
+  background-size: cover;
+  width: 5rem;
+  height: 6rem;
+}
+
+.avatar-img4 {
+  background: url(./assets/avatars/man.jpg) no-repeat;
+  background-size: cover;
+  width: 5rem;
+  height: 6rem;
+}
+
 #avatars label:hover {
   background-color: pink;
 }
