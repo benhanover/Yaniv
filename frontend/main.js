@@ -11,17 +11,17 @@ import * as Functions from './utils.js';
 const addPlayerButton = document.getElementById('add-player-button');
 const startGameButton = document.getElementById('start-button');
 
+
 // variables
 const gameControl = Functions.newRoundDealing({});
 
 
-
 // run program
-addPlayerButton.addEventListener('click', (event) => {
-    Functions.addPlayer(event, gameControl, addPlayerButton, startGameButton)
+addPlayerButton.addEventListener("click", (event) => {
+  Functions.addPlayer(event, gameControl, addPlayerButton, startGameButton);
 });
 
-startGameButton.addEventListener('click', (event) => {
-    Functions.startGame(gameControl);
+startGameButton.addEventListener("click", (event) => {
+  Functions.startGame(gameControl);
 });
 

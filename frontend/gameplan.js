@@ -39,4 +39,8 @@
 //     for (const player in players) {
 //         players.score = sum(players.cards);
 //     }
+<<<<<<< HEAD
 // }
+=======
+// }
+>>>>>>> 9b92a64d7f949a5f4fd4820b8645155369acb4e7

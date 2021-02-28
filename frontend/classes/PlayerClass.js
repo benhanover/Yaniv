@@ -62,7 +62,7 @@ export class Player {
     for (const card of this.playerDeck) {
       sum += card.value;
     }
-    this.cardsSum = sum;
+    this.cardSum = sum;
   }
   // Change name
   resetRoundScoreAndAddToScoreProp() {
