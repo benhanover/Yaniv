@@ -85,17 +85,7 @@ body {
   grid-column: 2;
 }
 
-#desk-container .yaniv {
-  background-image: url(./assets/yaniv.jpeg);
-  background-size: cover;
-  width: 100%;
-  -ms-grid-row: 5;
-  grid-row: 5;
-  -ms-grid-column: 5;
-  grid-column: 5;
-}
-
-#desk-container #yaniv-before-button {
+#desk-container .yaniv-before-button {
   background-image: url(./assets/yanibefore.jpeg);
   background-size: cover;
   width: 100%;
@@ -105,14 +95,14 @@ body {
   grid-column: 5;
 }
 
-#desk-container #Yaniv {
-  position: static;
-  -ms-grid-row: 4;
-  grid-row: 4;
+#desk-container .yaniv {
+  background-image: url(./assets/yaniv.jpeg);
+  background-size: cover;
+  width: 100%;
+  -ms-grid-row: 5;
+  grid-row: 5;
   -ms-grid-column: 5;
   grid-column: 5;
-  border-radius: 50%;
-  border: 0.6rem solid black;
 }
 
 #desk-container .pile-deck {
