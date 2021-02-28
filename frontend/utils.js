@@ -7,6 +7,10 @@ import { hidWelcomePage, randomOrderArray, catchElement, newElement, guessACard,
 
 function yanivListener(gameControl) {
   yanivRender(gameControl);
+  updateScoreTable(gameControl);
+  setTimeout(() => { newRoundDealing(gameControl) }, 7000);
+
+
 }
 
 
@@ -88,8 +92,6 @@ function createDesk(gameControl) {
           const playerThrownCards = player.throwCards();
           gameControl.pileDeck.cards.push(...playerThrownCards);
           player.sumHand();
-
-          console.log(player.cardsSum);
           renderBoard(gameControl);
           // WHY THE FUCK DOES SETTIMEOUT ZERO FIX IT????
           setTimeout(() => {
@@ -117,8 +119,7 @@ function createDesk(gameControl) {
         }
         gameControl.pileDeck.cards.push(...player.throwCards());
         player.drawCard(gameControl.tableDeck.drawCard());
-        player.cardsSum;
-        console.log(player.cardsSum);
+        player.sumHand();
         renderBoard(gameControl);
         // WHY THE FUCK DOES SETTIMEOUT ZERO FIX IT????
         setTimeout(() => {
@@ -132,7 +133,7 @@ function createDesk(gameControl) {
 
 function renderBoard(gameControl) {
   const deskContainer = document.getElementById('desk-container');
-  // Reminder
+  // Reminder for security problem.
   deskContainer.innerHTML = '';
   const yanivButton = newElement('button', null, null, deskContainer, null);
   const players = gameControl.players;
@@ -199,11 +200,12 @@ function createPlayerDiv(player, playerPosition, yanivButton, gameControl) {
 
 // update scoretable with total score and current round score
 // doenst concider yaniv and asaf
-function updateScoreTable(players) {
+function updateScoreTable(gameControl) {
+  const players = gameControl.players;
   // need declare this object in gameControl
   let scoreTable = { total: {}, currentRound: {} };
   for (const player of players) {
-    playerRoundScore = player.score - scoreTable.total[player.name];
+    const playerRoundScore = player.score - scoreTable.total[player.name];
     scoreTable.total[player.name] = player.score;
     scoreTable.currentRound[player.name] = playerRoundScore;
   }
@@ -239,12 +241,10 @@ function newRoundDealing(gameControl) {
     gameControl.tableDeck = deck;
     gameControl.pileDeck = pileDeck;
     for (const player of gameControl.players) {
-      player.playerDeck = gameControl.deck.deal5Cards();
+      player.playerDeck = gameControl.tableDeck.deal5Cards();
     }
     renderBoard(gameControl);
   }
-  // updateScoreTable(gameControl);
-  // renderBoard(gameControl);
 }
 
 function createPlayerPositions(players) {

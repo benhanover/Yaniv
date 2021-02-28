@@ -58,31 +58,29 @@ body {
     grid-column: 2;
   }
 
-  #yaniv-before-button {
+  .yaniv-before-button {
     background-image: url(./assets/yanibefore.jpeg);
     background-size: cover;
     width: 100%;
     grid-row: 5;
     grid-column: 5;
-    // display: none;
   }
 
-  #yaniv-after-button {
+  .yaniv {
     background-image: url(./assets/yaniv.jpeg);
     background-size: cover;
     width: 100%;
     grid-row: 5;
     grid-column: 5;
-    display: none;
   }
 
-  #Yaniv {
-    position: static;
-    grid-row: 4;
-    grid-column: 5;
-    border-radius: 50%;
-    border: 0.6rem solid black;
-  }
+  // #Yaniv {
+  //   position: static;
+  //   grid-row: 4;
+  //   grid-column: 5;
+  //   border-radius: 50%;
+  //   border: 0.6rem solid black;
+  // }
   .pile-deck {
     margin-right: 1rem;
     background-image: url(./assets/gray_back.png);
