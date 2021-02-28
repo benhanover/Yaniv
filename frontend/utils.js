@@ -5,12 +5,13 @@ import { hidWelcomePage, randomOrderArray, catchElement, newElement, guessACard,
 
 // Event Listeners:
 
+function yanivListener(gameControl) {
+    yanivRender(gameControl);
+}
+
+
 function startGame(gameControl) {
-
-
     hidWelcomePage();
-
-
     gameControl.players = randomOrderArray(gameControl.players);
     gameControl.players[0].turn = true;
 
@@ -37,6 +38,8 @@ function addPlayer(event, gameControl, addPlayerButton, startGameButton) {
         addPlayerButton.hidden = true;
     }
 }
+
+
 
 //   rendering functions :
 
@@ -68,7 +71,7 @@ function renderWelcomePagePlayers(player) {
 function createDesk(gameControl) {
     const deskContainer = catchElement("desk-container");
     const pileDeck = newElement("div", "pile-deck", null, deskContainer);
-    pileDeck.innerText = "Pile Deck";
+    pileDeck.innerText = gameControl.pileDeck.cards[gameControl.pileDeck.cards.length - 1].cardName();
     pileDeck.style.color = 'white';
     const tableDeck = newElement("div", "table-deck", null, deskContainer);
     tableDeck.innerText = "Table Deck";
@@ -87,6 +90,7 @@ function createDesk(gameControl) {
                     player.drawCard(gameControl.pileDeck.drawCard());
                     const playerThrownCards = player.throwCards();
                     gameControl.pileDeck.cards.push(...playerThrownCards);
+                    player.sumHand();
                     renderBoard(gameControl);
                     // WHY THE FUCK DOES SETTIMEOUT ZERO FIX IT????
                     setTimeout(() => {
@@ -99,7 +103,7 @@ function createDesk(gameControl) {
         }
     });
 
-    tableDeck.addEventListener("click", async (event) => {
+    tableDeck.addEventListener("click", (event) => {
         for (const player of gameControl.players) {
             if (player.turn) {
 
@@ -114,7 +118,9 @@ function createDesk(gameControl) {
                 }
                 gameControl.pileDeck.cards.push(...player.throwCards());
                 player.drawCard(gameControl.tableDeck.drawCard());
-                await renderBoard(gameControl);
+                player.sumHand();
+
+                renderBoard(gameControl);
                 // WHY THE FUCK DOES SETTIMEOUT ZERO FIX IT????
                 setTimeout(() => {
                     switchTurn(gameControl);
@@ -127,25 +133,35 @@ function createDesk(gameControl) {
 
 function renderBoard(gameControl) {
     const deskContainer = document.getElementById('desk-container');
-    const stam = document.createElement('div');
+    // Reminder
     deskContainer.innerHTML = '';
-    deskContainer.append(stam);
+    const yanivButton = newElement('button', null, null, deskContainer, null);
     const players = gameControl.players;
     const playerPositions = createPlayerPositions(players);
     for (let index = 0; index < players.length; index++) {
-        createPlayerDiv(players[index], playerPositions[index]);
+        createPlayerDiv(players[index], playerPositions[index], yanivButton, gameControl);
     }
     createDesk(gameControl);
 }
 
-function createPlayerDiv(player, playerPosition) {
+function createPlayerDiv(player, playerPosition, yanivButton, gameControl) {
     const playerId = player.id;
     const playerName = player.name;
     const playerAvatar = player.avatar;
     const playerScore = player.score;
     const playerDeck = player.playerDeck;
     const playerCardsSum = player.cardsSum;
-
+    console.log(playerCardsSum);
+    if (playerCardsSum <= 7) {
+        yanivButton.classList.remove('yaniv-before-button');
+        yanivButton.classList.add('yaniv');
+        yanivButton.addEventListener('click', () => {
+            yanivListener(gameControl);
+        });
+    } else {
+        yanivButton.classList.remove('yaniv');
+        yanivButton.classList.add('yaniv-before-button');
+    }
     const deskContainer = catchElement('desk-container');
 
     const playerContainer = newElement('div', 'player-container', null, deskContainer);
@@ -230,6 +246,24 @@ function createPlayerPositions(players) {
         return [possiblePositions[0], possiblePositions[1], possiblePositions[2]]
     }
     return possiblePositions;
+}
+
+
+function yanivRender(gameControl) {
+    createDesk(gameControl);
+    const players = gameControl.players;
+    const deskContainer = catchElement('desk-container');
+    for (const player of players) {
+        const playerDeck = player.playerDeck;
+        const playerContainer = newElement('div', 'player-container', null, deskContainer);
+        const playerCards = newElement('div', 'player-deck', null, playerContainer);
+        for (let card of playerDeck) {
+            const newCardElement = newElement('span', 'player-card', card.cardName(), playerCards);
+            newCardElement.addEventListener('click', (e) => {
+                card.chooseToggle(newCardElement);
+            });
+        }
+    }
 }
 
 export { addPlayer, getCheckedAvatar, renderWelcomePagePlayers, guessACard, startGame, createDesk, renderBoard, createPlayerDiv, updateScoreTable, playersCalculateFinshedRound, newRoundDealing };

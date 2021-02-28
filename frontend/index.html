@@ -1,3 +1,5 @@
+<!-- @format -->
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -12,12 +14,12 @@
     <div id="form-background">
       <section id="form-container">
         <section>
-        <h1 id="welcome-title">Welcome to Yaniv's place!</h1>
-      </section>
+          <h1 id="welcome-title">Welcome to Yaniv's place!</h1>
+        </section>
         <section id="form">
-          <input type="text" id="player-name" class="name" placeholder="Enter player name"/>
+          <input type="text" id="player-name" class="name" placeholder="Enter player name" />
           <section id="avatars">
-            <input type="radio" id="avatar1" name="avatar"  value="avatar1" checked/>
+            <input type="radio" id="avatar1" name="avatar" value="avatar1" checked />
             <label for="avatar1">Avatar1</label>
             <input type="radio" id="avatar2" name="avatar" value="avatar2" />
             <label for="avatar2">Avatar2</label>
@@ -26,12 +28,15 @@
             <input type="radio" id="avatar4" name="avatar" value="avatar4" />
             <label for="avatar4">Avatar4</label>
           </section>
-            <div id="players-container"></div>
-            <button id="add-player-button">Add Player</button>
-            <button hidden id="start-button">Start Game</button>
+          <div id="players-container"></div>
+          <button id="add-player-button">Add Player</button>
+          <button hidden id="start-button">Start Game</button>
         </section>
       </section>
     </div>
-    <div id="desk-container"></div>
+    <div id="desk-container">
+      <button id="yaniv-before-button"></button>
+      <button id="yaniv-after-button"></button>
+    </div>
   </body>
 </html>

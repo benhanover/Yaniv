@@ -415,4 +415,24 @@ button {
   border: solid green;
   background-color: white;
 }
+
+.yaniv-before-button {
+  background-image: url(./assets/yanibefore.jpeg);
+  background-size: cover;
+  width: 100%;
+  -ms-grid-row: 5;
+  grid-row: 5;
+  -ms-grid-column: 5;
+  grid-column: 5;
+}
+
+.yaniv {
+  background-image: url(./assets/yaniv.jpeg);
+  background-size: cover;
+  width: 100%;
+  -ms-grid-row: 5;
+  grid-row: 5;
+  -ms-grid-column: 5;
+  grid-column: 5;
+}
 /*# sourceMappingURL=style.css.map */

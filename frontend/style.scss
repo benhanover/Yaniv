@@ -257,3 +257,19 @@ button {
   border: solid green;
   background-color: white;
 }
+
+.yaniv-before-button {
+  background-image: url(./assets/yanibefore.jpeg);
+  background-size: cover;
+  width: 100%;
+  grid-row: 5;
+  grid-column: 5;
+}
+
+.yaniv {
+  background-image: url(./assets/yaniv.jpeg);
+  background-size: cover;
+  width: 100%;
+  grid-row: 5;
+  grid-column: 5;
+}
