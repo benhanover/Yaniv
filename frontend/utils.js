@@ -1,12 +1,14 @@
 import { Deck, Player, PileDeck, TableDeck, Card } from './export-tomain.js';
 import { hidWelcomePage, randomOrderArray, catchElement, newElement, guessACard, getCheckedAvatar, switchTurn } from './assistence-functions.js';
 
-
-
 // Event Listeners:
 
 function yanivListener(gameControl) {
   yanivRender(gameControl);
+  updateScoreTable(gameControl);
+  setTimeout(() => { newRoundDealing(gameControl) }, 7000);
+
+
 }
 
 
@@ -59,7 +61,6 @@ function renderWelcomePagePlayers(player) {
   div.appendChild(elementPlayerName);
 
   const elementPlayerAvatar = document.createElement("span");
-  console.log(playerAvatar);
   elementPlayerAvatar.classList.add(`avatar-img${playerAvatar.slice(-1)}`);
   div.appendChild(elementPlayerAvatar);
 
@@ -88,8 +89,6 @@ function createDesk(gameControl) {
           const playerThrownCards = player.throwCards();
           gameControl.pileDeck.cards.push(...playerThrownCards);
           player.sumHand();
-
-          console.log(player.cardsSum);
           renderBoard(gameControl);
           // WHY THE FUCK DOES SETTIMEOUT ZERO FIX IT????
           setTimeout(() => {
@@ -117,8 +116,7 @@ function createDesk(gameControl) {
         }
         gameControl.pileDeck.cards.push(...player.throwCards());
         player.drawCard(gameControl.tableDeck.drawCard());
-        player.cardsSum;
-        console.log(player.cardsSum);
+        player.sumHand();
         renderBoard(gameControl);
         // WHY THE FUCK DOES SETTIMEOUT ZERO FIX IT????
         setTimeout(() => {
@@ -132,7 +130,7 @@ function createDesk(gameControl) {
 
 function renderBoard(gameControl) {
   const deskContainer = document.getElementById('desk-container');
-  // Reminder
+  // Reminder for security problem.
   deskContainer.innerHTML = '';
   const yanivButton = newElement('button', null, null, deskContainer, null);
   const players = gameControl.players;
@@ -185,28 +183,22 @@ function createPlayerDiv(player, playerPosition, yanivButton, gameControl) {
 
   const playerProfile = newElement('div', 'player-profile', null, playerContainer)
   newElement('span', 'name-span', playerName, playerProfile);
-  newElement(
-    "span",
-    `avatar-img${playerAvatar.slice(-1)}`,
-    null,
-    playerProfile
-  );
+  newElement("span", `avatar-img${playerAvatar.slice(-1)}`, null, playerProfile);
   newElement('span', 'score-span', playerScore, playerProfile);
-
   newElement('span', 'id-span', playerId, playerContainer);
-
 }
 
 // update scoretable with total score and current round score
 // doenst concider yaniv and asaf
-function updateScoreTable(players) {
-  // need declare this object in gameControl
-  let scoreTable = { total: {}, currentRound: {} };
+function updateScoreTable(gameControl) {
+  const players = gameControl.players;
+  const scoreTable = gameControl.scoreTable;
   for (const player of players) {
-    playerRoundScore = player.score - scoreTable.total[player.name];
-    scoreTable.total[player.name] = player.score;
-    scoreTable.currentRound[player.name] = playerRoundScore;
+    console.log(player.score);
+    scoreTable.currentRound[player.name] = player.cardsSum;
+    scoreTable.total[player.name] = player.score + player.cardsSum;
   }
+  console.log(scoreTable);
   return scoreTable;
 }
 
@@ -229,6 +221,10 @@ function newRoundDealing(gameControl) {
       tableDeck: deck,
       pileDeck: pileDeck,
       players: players,
+      scoreTable: {
+        total: {},
+        currentRound: {}
+      }
     };
     return gameControl;
   } else {
@@ -239,12 +235,10 @@ function newRoundDealing(gameControl) {
     gameControl.tableDeck = deck;
     gameControl.pileDeck = pileDeck;
     for (const player of gameControl.players) {
-      player.playerDeck = gameControl.deck.deal5Cards();
+      player.playerDeck = gameControl.tableDeck.deal5Cards();
     }
     renderBoard(gameControl);
   }
-  // updateScoreTable(gameControl);
-  // renderBoard(gameControl);
 }
 
 function createPlayerPositions(players) {
@@ -275,17 +269,5 @@ function yanivRender(gameControl) {
   }
 }
 
-export {
-  addPlayer,
-  getCheckedAvatar,
-  renderWelcomePagePlayers,
-  guessACard,
-  startGame,
-  createDesk,
-  renderBoard,
-  createPlayerDiv,
-  updateScoreTable,
-  playersCalculateFinshedRound,
-  newRoundDealing,
-};
+export { addPlayer, getCheckedAvatar, renderWelcomePagePlayers, guessACard, startGame, createDesk, renderBoard, createPlayerDiv, updateScoreTable, playersCalculateFinshedRound, newRoundDealing };
 
