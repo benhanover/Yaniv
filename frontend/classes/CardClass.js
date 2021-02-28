@@ -1,12 +1,13 @@
-// - Cards
+// Cards
 export class Card {
-  constructor(suit, rank, value, isJoker, hidden) {
+  constructor(suit, rank, value, id, isJoker, hidden) {
     this.suit = suit;
     this.rank = rank;
     this.value = value;
     this.isJoker = isJoker;
     this.chosen = false;
     this.hidden = hidden;
+    this.id;
   }
 
   cardName() {

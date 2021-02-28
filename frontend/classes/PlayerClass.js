@@ -7,6 +7,7 @@ export class Player {
     this.avatar = avatar;
     this.turn = false;
     this.cardsSum = this.sumHandFirstRound();
+    this.yanivDecleration = false;
   }
 
   drawCard(card) {

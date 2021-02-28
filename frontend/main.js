@@ -25,3 +25,4 @@ startGameButton.addEventListener("click", (event) => {
   Functions.startGame(gameControl);
 });
 
+
