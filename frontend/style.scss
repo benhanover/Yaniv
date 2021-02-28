@@ -1,6 +1,275 @@
-body {
-    background-color: aqua;
+/** @format */
+
+// $playerContainerHeigth = 3rem;
+// $gridHeight: 4.5rem;
+* {
+  margin: 0;
+  padding: 0;
 }
-h1 {
-    font-size: 2rem;
+body {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+#form-background {
+  position: absolute;
+  background-color: rgba(0, 0, 0, 1);
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  z-index: 1;
+
+  #form-container {
+    background-color: goldenrod;
+    width: 70%;
+    height: 50%;
+    margin: auto;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    h1 {
+      text-align: center;
+      font-size: 2rem;
+      font-family: monospace;
+      color: white;
+      margin: 0.7rem 0;
+    }
+    #form {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      align-items: center;
+    }
+  }
+}
+
+#desk-container {
+  background-color: red;
+  display: grid;
+  grid-template-columns: 4.5rem 10fr 5fr 2fr 4.5rem;
+  grid-template-rows: 4.5rem 2fr 3.8rem 2fr 4.5rem;
+  position: relative;
+  width: 100%;
+  height: 100%;
+
+  .pile-deck {
+    background-color: rgb(22, 19, 19);
+    margin-right: 1rem;
+    width: 2.7rem;
+    height: 3.8rem;
+    display: flex;
+    justify-content: center;
+    grid-column: 2/3;
+    margin: 0 auto;
+    grid-row: 3;
+  }
+
+  .table-deck {
+    background-color: rgb(76, 0, 255);
+    width: 2.7rem;
+    height: 3.8rem;
+    display: flex;
+    margin: 0 auto;
+    grid-column: 3/4;
+    grid-row: 3;
+  }
+}
+
+.current-player {
+  background-color: brown;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  grid-column: 2/5;
+  grid-row: 5/6;
+
+  .cards-sum-span {
+    background-color: orange;
+    display: flex;
+    align-content: center;
+    padding: 0.5rem;
+    height: fit-content;
+  }
+  .player-deck {
+    display: flex;
+    align-items: center;
+
+    .player-card {
+      padding: 0.2rem;
+    }
+  }
+  .player-profile {
+    background-color: yellow;
+    display: flex;
+    flex-direction: column;
+    padding: 0.5rem;
+  }
+}
+
+.left-player {
+  background-color: brown;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  grid-column: 1;
+  grid-row: 2/5;
+  .cards-sum-span {
+    background-color: orange;
+    display: flex;
+    align-self: center;
+    padding: 0.5rem;
+    width: fit-content;
+  }
+  .player-deck {
+    display: flex;
+    align-items: center;
+
+    .player-card {
+      padding: 0.2rem;
+    }
+  }
+  .player-profile {
+    background-color: yellow;
+    display: flex;
+    flex-direction: column;
+    padding: 0.5rem;
+  }
+}
+
+.top-player {
+  background-color: brown;
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  align-items: center;
+  grid-column: 2/5;
+  grid-row: 1/2;
+
+  .cards-sum-span {
+    background-color: orange;
+    display: flex;
+    align-content: center;
+    padding: 0.5rem;
+    height: fit-content;
+  }
+  .player-deck {
+    display: flex;
+    align-items: center;
+
+    .player-card {
+      padding: 0.2rem;
+    }
+  }
+  .player-profile {
+    background-color: yellow;
+    display: flex;
+    flex-direction: column;
+    padding: 0.5rem;
+  }
+}
+.right-player {
+  background-color: brown;
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: space-between;
+  grid-column: 5;
+  grid-row: 2/5;
+
+  .cards-sum-span {
+    background-color: orange;
+    display: flex;
+    align-self: center;
+    padding: 0.5rem;
+    width: fit-content;
+  }
+  .player-deck {
+    display: flex;
+    align-items: center;
+  }
+  .player-card {
+    padding: 0.2rem;
+  }
+  .player-profile {
+    background-color: yellow;
+    display: flex;
+    flex-direction: column;
+    padding: 0.5rem;
+  }
+}
+
+.player-container {
+  .id-span {
+    display: none;
+  }
+}
+.right-player,
+.left-player {
+  .player-deck {
+    display: flex;
+    flex-direction: column;
+  }
+}
+#avatars {
+  padding: 0.7rem 0;
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+}
+
+#avatars input[type="radio"] {
+  opacity: 0;
+  position: fixed;
+  width: 0;
+}
+#player-name,
+button {
+  width: 40%;
+}
+
+#avatars label {
+  display: inline-block;
+  background-color: rgb(228, 206, 206);
+  margin: 0 5px;
+  padding: 10px 10px;
+  font-family: sans-serif, Arial;
+  font-size: 10px;
+  border: 2px solid #444;
+  border-radius: 4px;
+}
+#avatars label:hover {
+  background-color: pink;
+}
+
+#avatars input[type="radio"]:focus + label {
+  border: 2px dashed rgb(83, 28, 28);
+}
+
+#avatars input[type="radio"]:checked + label {
+  background-color: rgb(196, 245, 196);
+  border-color: lightblue;
+}
+
+.chosen {
+  border: solid green;
+  background-color: white;
+}
+
+.yaniv-before-button {
+  background-image: url(./assets/yanibefore.jpeg);
+  background-size: cover;
+  width: 100%;
+  grid-row: 5;
+  grid-column: 5;
+}
+
+.yaniv {
+  background-image: url(./assets/yaniv.jpeg);
+  background-size: cover;
+  width: 100%;
+  grid-row: 5;
+  grid-column: 5;
 }
