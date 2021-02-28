@@ -26,10 +26,6 @@ export class Player {
       }
     }
     this.playerDeck = unChosenCards;
-
-    console.log(this.playerDeck);
-    // console.log(chosenCards);
-
     for (let index = 0; index < chosenElements.length; index++) {
       chosenCards[index].chooseToggle(chosenElements[index]);
     }
@@ -63,7 +59,6 @@ export class Player {
       sum += card.value;
     }
     this.cardsSum = sum;
-    console.log(this.cardsSum);
   }
   // Change name
   resetRoundScoreAndAddToScoreProp() {

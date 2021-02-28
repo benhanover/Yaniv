@@ -55,7 +55,6 @@ function switchTurn(gameControl) {
   } else {
     players[playerTurnIndex + 1].turn = true;
   }
-  console.log(players);
 }
 
 function createPlayerPositions(players) {

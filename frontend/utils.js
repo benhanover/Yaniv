@@ -1,8 +1,6 @@
 import { Deck, Player, PileDeck, TableDeck, Card } from './export-tomain.js';
 import { hidWelcomePage, randomOrderArray, catchElement, newElement, guessACard, getCheckedAvatar, switchTurn } from './assistence-functions.js';
 
-
-
 // Event Listeners:
 
 function yanivListener(gameControl) {
@@ -63,7 +61,6 @@ function renderWelcomePagePlayers(player) {
   div.appendChild(elementPlayerName);
 
   const elementPlayerAvatar = document.createElement("span");
-  console.log(playerAvatar);
   elementPlayerAvatar.classList.add(`avatar-img${playerAvatar.slice(-1)}`);
   div.appendChild(elementPlayerAvatar);
 
@@ -186,29 +183,22 @@ function createPlayerDiv(player, playerPosition, yanivButton, gameControl) {
 
   const playerProfile = newElement('div', 'player-profile', null, playerContainer)
   newElement('span', 'name-span', playerName, playerProfile);
-  newElement(
-    "span",
-    `avatar-img${playerAvatar.slice(-1)}`,
-    null,
-    playerProfile
-  );
+  newElement("span", `avatar-img${playerAvatar.slice(-1)}`, null, playerProfile);
   newElement('span', 'score-span', playerScore, playerProfile);
-
   newElement('span', 'id-span', playerId, playerContainer);
-
 }
 
 // update scoretable with total score and current round score
 // doenst concider yaniv and asaf
 function updateScoreTable(gameControl) {
   const players = gameControl.players;
-  // need declare this object in gameControl
-  let scoreTable = { total: {}, currentRound: {} };
+  const scoreTable = gameControl.scoreTable;
   for (const player of players) {
-    const playerRoundScore = player.score - scoreTable.total[player.name];
-    scoreTable.total[player.name] = player.score;
-    scoreTable.currentRound[player.name] = playerRoundScore;
+    console.log(player.score);
+    scoreTable.currentRound[player.name] = player.cardsSum;
+    scoreTable.total[player.name] = player.score + player.cardsSum;
   }
+  console.log(scoreTable);
   return scoreTable;
 }
 
@@ -231,6 +221,10 @@ function newRoundDealing(gameControl) {
       tableDeck: deck,
       pileDeck: pileDeck,
       players: players,
+      scoreTable: {
+        total: {},
+        currentRound: {}
+      }
     };
     return gameControl;
   } else {
@@ -275,17 +269,5 @@ function yanivRender(gameControl) {
   }
 }
 
-export {
-  addPlayer,
-  getCheckedAvatar,
-  renderWelcomePagePlayers,
-  guessACard,
-  startGame,
-  createDesk,
-  renderBoard,
-  createPlayerDiv,
-  updateScoreTable,
-  playersCalculateFinshedRound,
-  newRoundDealing,
-};
+export { addPlayer, getCheckedAvatar, renderWelcomePagePlayers, guessACard, startGame, createDesk, renderBoard, createPlayerDiv, updateScoreTable, playersCalculateFinshedRound, newRoundDealing };
 
