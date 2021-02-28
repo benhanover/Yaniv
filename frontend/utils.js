@@ -1,13 +1,27 @@
 import { Deck, Player, PileDeck, TableDeck, Card } from './export-tomain.js';
-import { hidWelcomePage, randomOrderArray, catchElement, newElement, guessACard, getCheckedAvatar, switchTurn } from './assistence-functions.js';
+import { hidWelcomePage, randomOrderArray, catchElement, newElement, guessACard, getCheckedAvatar, switchTurn, updatePlayersCardsCounter } from './assistence-functions.js';
 
 // Event Listeners:
 
 function yanivListener(gameControl) {
-  yanivRender(gameControl);
-  updateScoreTable(gameControl);
-  setTimeout(() => { newRoundDealing(gameControl) }, 7000);
+  yanivRender(gameControl);///reveld cards , 
+  const winner = updateScoreTable(gameControl);// how is the winner , giving score , update
+  renderScoreTable(gameControl); /// present the winner and the table
+  // setNewFirstTurn(gameControl, winner);// first player turn 
+  setTimeout(() => {
+    newRoundDealing(gameControl);//sets the desk for new round
+    updatePlayersCardsCounter(gameControl);
+  }, 7000);
 
+
+}
+
+function theWinnerIs(gameControl) {
+  const players = gameControl.players;
+  let lowerScore = 100;
+  // for (player of players) {
+  //   if 
+  // }
 
 }
 
@@ -148,16 +162,7 @@ function createPlayerDiv(player, playerPosition, yanivButton, gameControl) {
   const playerScore = player.score;
   const playerDeck = player.playerDeck;
   const playerCardsSum = player.cardsSum;
-  if (playerCardsSum <= 7) {
-    yanivButton.classList.remove('yaniv-before-button');
-    yanivButton.classList.add('yaniv');
-    yanivButton.addEventListener('click', () => {
-      yanivListener(gameControl);
-    });
-  } else {
-    yanivButton.classList.remove('yaniv');
-    yanivButton.classList.add('yaniv-before-button');
-  }
+
   const deskContainer = catchElement('desk-container');
 
   const playerContainer = newElement('div', 'player-container', null, deskContainer);
@@ -166,6 +171,18 @@ function createPlayerDiv(player, playerPosition, yanivButton, gameControl) {
 
   // display only cards of the player that has the turn
   if (player.turn === true) {
+    if (playerCardsSum <= 7) {
+      // if (playerCardsSum <= 100) {
+      // yanivButton.classList.remove('yaniv-before-button');
+      yanivButton.classList.add('yaniv');
+      yanivButton.addEventListener('click', () => {
+        player.Yaniv(gameControl);
+        yanivListener(gameControl);
+      });
+    } else {
+      // yanivButton.classList.remove('yaniv');
+      yanivButton.classList.add('yaniv-before-button');
+    }
     const playerCards = newElement('div', 'player-deck', null, playerContainer);
     for (let card of playerDeck) {
       const newCardElement = document.createElement("img");
@@ -177,7 +194,7 @@ function createPlayerDiv(player, playerPosition, yanivButton, gameControl) {
       newCardElement.addEventListener('click', (e) => {
         card.chooseToggle(newCardElement);
       });
-      playerContainer.append(newCardElement);
+      playerCards.append(newCardElement);
     }
   }
 
@@ -193,12 +210,21 @@ function createPlayerDiv(player, playerPosition, yanivButton, gameControl) {
 function updateScoreTable(gameControl) {
   const players = gameControl.players;
   const scoreTable = gameControl.scoreTable;
+  const roundScore = {};
   for (const player of players) {
-    console.log(player.score);
+    roundScore[player.name] = player.cardsSum;
+
+  }
+  // const winner: player = theWinnerIs(gameControl);
+
+
+
+
+
+  for (const player of players) {
     scoreTable.currentRound[player.name] = player.cardsSum;
     scoreTable.total[player.name] = player.score + player.cardsSum;
   }
-  console.log(scoreTable);
   return scoreTable;
 }
 
@@ -251,23 +277,57 @@ function createPlayerPositions(players) {
   return possiblePositions;
 }
 
-
-function yanivRender(gameControl) {
-  createDesk(gameControl);
+function renderScoreTable(gameControl) {
+  const deskContainer = document.getElementById('desk-container');
   const players = gameControl.players;
-  const deskContainer = catchElement('desk-container');
+  const div = newElement('div', null, null, deskContainer, "score-table-div");
+  console.log(gameControl.scoreTable);
   for (const player of players) {
-    const playerDeck = player.playerDeck;
-    const playerContainer = newElement('div', 'player-container', null, deskContainer);
-    const playerCards = newElement('div', 'player-deck', null, playerContainer);
-    for (let card of playerDeck) {
-      const newCardElement = newElement('span', 'player-card', card.cardName(), playerCards);
-      newCardElement.addEventListener('click', (e) => {
-        card.chooseToggle(newCardElement);
-      });
-    }
+    const playerTotalScore = gameControl.scoreTable.total[player.name];
+    const playerRoundScore = gameControl.scoreTable.currentRound[player.name];
+    const totalElement = newElement('h1', 'total-element', `${player.name} totaled of: ${playerTotalScore}`, div, null);
+    const currentElement = newElement('h1', 'current-element', `${player.name} current: ${playerRoundScore}`, div, null);
   }
 }
+
+function yanivRender(gameControl) {
+  // REVEAL EVERYONE CARDS
+  // remove event listeners player deck and desks deck
+  // 
+  const players = gameControl.players;
+  for (const player of players) {
+    player.turn = true;
+  }
+
+  const deskContainer = document.getElementById('desk-container');
+  deskContainer.innerHTML = '';
+  const yanivButton = newElement('button', null, null, deskContainer, null);
+  for (const player of players) {
+    createPlayerDiv(player, player.position, yanivButton, gameControl);
+  }
+  createDesk(gameControl);
+  for (const player of players) {
+    player.turn = false;
+  }
+
+
+
+}
+
+
+// const winner: player = updateScoreTable(gameControl)
+
+function setNewFirstTurn(gameControl) {
+  const players = gameControl.players;
+  for (const player of players) {
+    if (player.winner) {
+      player.turn = true;
+      player.winner = fulse;
+    }
+  }
+
+}
+
 
 export { addPlayer, getCheckedAvatar, renderWelcomePagePlayers, guessACard, startGame, createDesk, renderBoard, createPlayerDiv, updateScoreTable, playersCalculateFinshedRound, newRoundDealing };
 

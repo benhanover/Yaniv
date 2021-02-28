@@ -72,6 +72,13 @@ function createPlayerPositions(players) {
   return possiblePositions;
 }
 
+function updatePlayersCardsCounter(gameControl) {
+  const players = gameControl.players;
+  for (const player of players) {
+    player.sumHand();
+  }
+}
+
 export {
   guessACard,
   newElement,
@@ -81,5 +88,6 @@ export {
   getCheckedAvatar,
   createPlayerPositions,
   switchTurn,
+  updatePlayersCardsCounter
 };
 

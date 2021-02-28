@@ -65,6 +65,9 @@ export class Player {
     this.score += this.cardSum;
   }
 
+  // toStringScores() {
+  //   return `${this.name} scored ${this.cardsSum} this round and total of ${this.score}!`;
+  // }
 
 
   // stickCards(cards){

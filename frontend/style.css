@@ -1,3 +1,4 @@
+/** @format */
 * {
   margin: 0;
   padding: 0;
@@ -89,6 +90,7 @@ body {
   background-image: url(./assets/yanibefore.jpeg);
   background-size: cover;
   width: 100%;
+  height: 100%;
   -ms-grid-row: 5;
   grid-row: 5;
   -ms-grid-column: 5;
@@ -99,6 +101,7 @@ body {
   background-image: url(./assets/yaniv.jpeg);
   background-size: cover;
   width: 100%;
+  height: 100%;
   -ms-grid-row: 5;
   grid-row: 5;
   -ms-grid-column: 5;
