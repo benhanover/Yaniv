@@ -17,9 +17,21 @@
           <h1 id="welcome-title">Welcome to Yaniv's place!</h1>
         </section>
         <section id="form">
-          <input type="text" id="player-name" class="name" placeholder="Enter player name" />
+          <input
+            type="text"
+            id="player-name"
+            class="nameInput"
+            placeholder="Enter player name"
+            maxlength="10"
+          />
           <section id="avatars">
-            <input type="radio" id="avatar1" name="avatar" value="avatar1" checked />
+            <input
+              type="radio"
+              id="avatar1"
+              name="avatar"
+              value="avatar1"
+              checked
+            />
             <label for="avatar1" class="avatar-img1"></label>
             <input type="radio" id="avatar2" name="avatar" value="avatar2" />
             <label for="avatar2" class="avatar-img2"></label>
@@ -37,6 +49,7 @@
     <div id="desk-container">
       <button id="yaniv-before-button"></button>
       <button id="yaniv-after-button"></button>
+      <!-- <button id="tableScore"></button> -->
     </div>
   </body>
 </html>
