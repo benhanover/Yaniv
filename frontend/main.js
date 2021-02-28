@@ -4,7 +4,7 @@
 //draw card-badname
 
 // imports
-import { Deck, Player, PileDeck, TableDeck, Card} from './export-tomain.js';
+import { Deck, Player, PileDeck, TableDeck, Card } from './export-tomain.js';
 import * as Functions from './utils.js';
 
 // elements

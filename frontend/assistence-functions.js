@@ -1,5 +1,5 @@
 // MOVE
- function hidWelcomePage(){
+function hidWelcomePage() {
     const form = catchElement("form-background");
     form.style.display = 'none';
 
@@ -49,6 +49,17 @@ function getCheckedAvatar() {
         }
     }
 }
+function switchTurn(gameControl) {
+    const players = gameControl.players;
+    const playerTurnIndex = players.findIndex((player) => { return player.turn === true });
+    players[playerTurnIndex].turn = false;
+    if (playerTurnIndex === players.length - 1) {
+        players[0].turn = true;
+    } else {
+        players[playerTurnIndex + 1].turn = true;
+    }
+    console.log(players);
+}
 
 
-export { guessACard , newElement , catchElement, randomOrderArray ,  hidWelcomePage , getCheckedAvatar };
+export { guessACard, newElement, catchElement, randomOrderArray, hidWelcomePage, getCheckedAvatar, switchTurn };

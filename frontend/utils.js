@@ -1,5 +1,5 @@
 import { Deck, Player, PileDeck, TableDeck, Card } from './export-tomain.js';
-import { hidWelcomePage, randomOrderArray, catchElement, newElement, guessACard, getCheckedAvatar } from './assistence-functions.js';
+import { hidWelcomePage, randomOrderArray, catchElement, newElement, guessACard, getCheckedAvatar, switchTurn } from './assistence-functions.js';
 
 
 
@@ -75,6 +75,11 @@ function createDesk(gameControl) {
     pileDeck.addEventListener("click", (event) => {
         for (const player of gameControl.players) {
             if (player.turn) {
+                const chosensCount = document.querySelectorAll('.chosen').length;
+                if (chosensCount === 0) {
+                    alert("must choose a card");
+                    return;
+                }
                 if (gameControl.pileDeck.cards.length === 0) {
                     alert("Canot draw card from an empty deck");
                     return;
@@ -83,28 +88,48 @@ function createDesk(gameControl) {
                     const playerThrownCards = player.throwCards();
                     gameControl.pileDeck.cards.push(...playerThrownCards);
                     renderBoard(gameControl);
+                    // WHY THE FUCK DOES SETTIMEOUT ZERO FIX IT????
+                    setTimeout(() => {
+                        switchTurn(gameControl);
+                        renderBoard(gameControl);
+                    }, 2000);
+
                 }
             }
         }
     });
 
-    tableDeck.addEventListener("click", (event) => {
+    tableDeck.addEventListener("click", async (event) => {
         for (const player of gameControl.players) {
             if (player.turn) {
-                if (gameControl.tableDeck.length === 0) {
+
+                const chosensCount = document.querySelectorAll('.chosen').length;
+                if (chosensCount === 0) {
+                    alert("must choose a card");
+                    return;
+                }
+                if (gameControl.tableDeck.cards.length === 0) {
                     alert("Canot draw card from an empty deck");
                     return;
                 }
                 gameControl.pileDeck.cards.push(...player.throwCards());
                 player.drawCard(gameControl.tableDeck.drawCard());
-                console.log(gameControl.pileDeck.cards);
-                renderBoard(gameControl);
+                await renderBoard(gameControl);
+                // WHY THE FUCK DOES SETTIMEOUT ZERO FIX IT????
+                setTimeout(() => {
+                    switchTurn(gameControl);
+                    renderBoard(gameControl);
+                }, 2000);
             }
         }
     });
 }
 
 function renderBoard(gameControl) {
+    const deskContainer = document.getElementById('desk-container');
+    const stam = document.createElement('div');
+    deskContainer.innerHTML = '';
+    deskContainer.append(stam);
     const players = gameControl.players;
     const playerPositions = createPlayerPositions(players);
     for (let index = 0; index < players.length; index++) {

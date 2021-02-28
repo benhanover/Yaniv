@@ -13,7 +13,6 @@ export class TableDeck extends Deck {
       for (const rankAndVal of ranksAndValues) {
         this.cards.push(new Card(sign, rankAndVal[0], rankAndVal[1], false, true));
       }
-
     }
     this.cards.push(new Card("Joker", "BlackJoker", 0, true, true));
     this.cards.push(new Card("Joker", "RedJoker", 0, true, true));
