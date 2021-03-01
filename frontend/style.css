@@ -67,7 +67,7 @@ body {
 }
 
 #desk-container {
-  background-color: #e2c57f;
+  background-color: #ebc580;
   display: -ms-grid;
   display: grid;
   -ms-grid-columns: 9rem 10fr 5fr 2fr 9rem;

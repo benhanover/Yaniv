@@ -1,30 +1,35 @@
-import { Deck, Player, PileDeck, TableDeck, Card } from './export-tomain.js';
-import { hidWelcomePage, randomOrderArray, catchElement, newElement, guessACard, getCheckedAvatar, switchTurn, updatePlayersCardsCounter } from './assistence-functions.js';
+import { Deck, Player, PileDeck, TableDeck, Card } from "./export-tomain.js";
+import {
+  hidWelcomePage,
+  randomOrderArray,
+  catchElement,
+  newElement,
+  guessACard,
+  getCheckedAvatar,
+  switchTurn,
+  updatePlayersCardsCounter,
+} from "./assistence-functions.js";
 
 // Event Listeners:
 
 function yanivListener(gameControl) {
-  yanivRender(gameControl);///reveld cards , 
-  const winner = updateScoreTable(gameControl);// how is the winner , giving score , update
+  yanivRender(gameControl); ///reveld cards ,
+  const winner = updateScoreTable(gameControl); // how is the winner , giving score , update
   renderScoreTable(gameControl); /// present the winner and the table
-  // setNewFirstTurn(gameControl, winner);// first player turn 
+  // setNewFirstTurn(gameControl, winner);// first player turn
   setTimeout(() => {
-    newRoundDealing(gameControl);//sets the desk for new round
+    newRoundDealing(gameControl); //sets the desk for new round
     updatePlayersCardsCounter(gameControl);
   }, 7000);
-
-
 }
 
 function theWinnerIs(gameControl) {
   const players = gameControl.players;
   let lowerScore = 100;
   // for (player of players) {
-  //   if 
+  //   if
   // }
-
 }
-
 
 function startGame(gameControl) {
   hidWelcomePage();
@@ -34,7 +39,7 @@ function startGame(gameControl) {
 }
 
 function addPlayer(event, gameControl, addPlayerButton, startGameButton) {
-  const nameInput = document.getElementById('player-name');
+  const nameInput = document.getElementById("player-name");
   const newPlayerName = nameInput.value;
   nameInput.value = "";
   const playerDeck = gameControl.tableDeck.deal5Cards();
@@ -48,8 +53,7 @@ function addPlayer(event, gameControl, addPlayerButton, startGameButton) {
   renderWelcomePagePlayers(newPlayer);
   if (players.length == 2) {
     startGameButton.hidden = false;
-  }
-  else if (players.length === 4) {
+  } else if (players.length === 4) {
     addPlayerButton.hidden = true;
   }
 }
@@ -58,19 +62,19 @@ function addPlayer(event, gameControl, addPlayerButton, startGameButton) {
 // =========================
 // render added players to the welcome page
 function renderWelcomePagePlayers(player) {
-  const playerContainer = document.getElementById('players-container');
+  const playerContainer = document.getElementById("players-container");
   const playerName = player.name;
   const playerAvatar = player.avatar;
   const playerId = player.id;
 
-  const div = document.createElement('div');
+  const div = document.createElement("div");
   div.classList.add("welcome-player-div");
 
-  const elemnentIndex = document.createElement('span');
+  const elemnentIndex = document.createElement("span");
   elemnentIndex.innerText = playerId;
   div.appendChild(elemnentIndex);
 
-  const elementPlayerName = document.createElement('span');
+  const elementPlayerName = document.createElement("span");
   elementPlayerName.innerText = playerName;
   div.appendChild(elementPlayerName);
 
@@ -84,13 +88,15 @@ function renderWelcomePagePlayers(player) {
 function createDesk(gameControl) {
   const deskContainer = catchElement("desk-container");
   const pileDeck = newElement("div", "pile-deck", null, deskContainer);
-  pileDeck.innerText = gameControl.pileDeck.cards[gameControl.pileDeck.cards.length - 1].cardName();
-  pileDeck.style.color = 'white';
+  pileDeck.innerText = gameControl.pileDeck.cards[
+    gameControl.pileDeck.cards.length - 1
+  ].cardName();
+  pileDeck.style.color = "white";
   const tableDeck = newElement("div", "table-deck", null, deskContainer);
   pileDeck.addEventListener("click", (event) => {
     for (const player of gameControl.players) {
       if (player.turn) {
-        const chosensCount = document.querySelectorAll('.chosen').length;
+        const chosensCount = document.querySelectorAll(".chosen").length;
         if (chosensCount === 0) {
           alert("must choose a card");
           return;
@@ -109,7 +115,6 @@ function createDesk(gameControl) {
             switchTurn(gameControl);
             renderBoard(gameControl);
           }, 2000);
-
         }
       }
     }
@@ -118,8 +123,7 @@ function createDesk(gameControl) {
   tableDeck.addEventListener("click", (event) => {
     for (const player of gameControl.players) {
       if (player.turn) {
-
-        const chosensCount = document.querySelectorAll('.chosen').length;
+        const chosensCount = document.querySelectorAll(".chosen").length;
         if (chosensCount === 0) {
           alert("must choose a card");
           return;
@@ -143,14 +147,19 @@ function createDesk(gameControl) {
 }
 
 function renderBoard(gameControl) {
-  const deskContainer = document.getElementById('desk-container');
+  const deskContainer = document.getElementById("desk-container");
   // Reminder for security problem.
-  deskContainer.innerHTML = '';
-  const yanivButton = newElement('button', null, null, deskContainer, null);
+  deskContainer.innerHTML = "";
+  const yanivButton = newElement("button", null, null, deskContainer, null);
   const players = gameControl.players;
   const playerPositions = createPlayerPositions(players);
   for (let index = 0; index < players.length; index++) {
-    createPlayerDiv(players[index], playerPositions[index], yanivButton, gameControl);
+    createPlayerDiv(
+      players[index],
+      playerPositions[index],
+      yanivButton,
+      gameControl
+    );
   }
   createDesk(gameControl);
 }
@@ -163,27 +172,32 @@ function createPlayerDiv(player, playerPosition, yanivButton, gameControl) {
   const playerDeck = player.playerDeck;
   const playerCardsSum = player.cardsSum;
 
-  const deskContainer = catchElement('desk-container');
+  const deskContainer = catchElement("desk-container");
 
-  const playerContainer = newElement('div', 'player-container', null, deskContainer);
+  const playerContainer = newElement(
+    "div",
+    "player-container",
+    null,
+    deskContainer
+  );
   playerContainer.classList.add(playerPosition);
-  newElement('span', 'cards-sum-span', playerCardsSum, playerContainer);
 
   // display only cards of the player that has the turn
   if (player.turn === true) {
+    newElement("span", "cards-sum-span", playerCardsSum, playerContainer);
     if (playerCardsSum <= 7) {
       // if (playerCardsSum <= 100) {
       // yanivButton.classList.remove('yaniv-before-button');
-      yanivButton.classList.add('yaniv');
-      yanivButton.addEventListener('click', () => {
+      yanivButton.classList.add("yaniv");
+      yanivButton.addEventListener("click", () => {
         player.Yaniv(gameControl);
         yanivListener(gameControl);
       });
     } else {
       // yanivButton.classList.remove('yaniv');
-      yanivButton.classList.add('yaniv-before-button');
+      yanivButton.classList.add("yaniv-before-button");
     }
-    const playerCards = newElement('div', 'player-deck', null, playerContainer);
+    const playerCards = newElement("div", "player-deck", null, playerContainer);
     for (let card of playerDeck) {
       const newCardElement = document.createElement("img");
       newCardElement.setAttribute(
@@ -191,18 +205,28 @@ function createPlayerDiv(player, playerPosition, yanivButton, gameControl) {
         `./assets/cards/${card.cardName()}.png`
       );
       newCardElement.classList.add("player-card");
-      newCardElement.addEventListener('click', (e) => {
+      newCardElement.addEventListener("click", (e) => {
         card.chooseToggle(newCardElement);
       });
       playerCards.append(newCardElement);
     }
   }
 
-  const playerProfile = newElement('div', 'player-profile', null, playerContainer)
-  newElement('span', 'name-span', playerName, playerProfile);
-  newElement("span", `avatar-img${playerAvatar.slice(-1)}`, null, playerProfile);
-  newElement('span', 'score-span', playerScore, playerProfile);
-  newElement('span', 'id-span', playerId, playerContainer);
+  const playerProfile = newElement(
+    "div",
+    "player-profile",
+    null,
+    playerContainer
+  );
+  newElement("span", "name-span", playerName, playerProfile);
+  newElement(
+    "span",
+    `avatar-img${playerAvatar.slice(-1)}`,
+    null,
+    playerProfile
+  );
+  newElement("span", "score-span", playerScore, playerProfile);
+  newElement("span", "id-span", playerId, playerContainer);
 }
 
 // update scoretable with total score and current round score
@@ -213,13 +237,8 @@ function updateScoreTable(gameControl) {
   const roundScore = {};
   for (const player of players) {
     roundScore[player.name] = player.cardsSum;
-
   }
   // const winner: player = theWinnerIs(gameControl);
-
-
-
-
 
   for (const player of players) {
     scoreTable.currentRound[player.name] = player.cardsSum;
@@ -249,8 +268,8 @@ function newRoundDealing(gameControl) {
       players: players,
       scoreTable: {
         total: {},
-        currentRound: {}
-      }
+        currentRound: {},
+      },
     };
     return gameControl;
   } else {
@@ -268,40 +287,57 @@ function newRoundDealing(gameControl) {
 }
 
 function createPlayerPositions(players) {
-  const possiblePositions = ['current-player', 'left-player', 'top-player', 'right-player']
+  const possiblePositions = [
+    "current-player",
+    "left-player",
+    "top-player",
+    "right-player",
+  ];
   if (players.length === 2) {
-    return [possiblePositions[0], possiblePositions[2]]
+    return [possiblePositions[0], possiblePositions[2]];
   } else if (players.length === 3) {
-    return [possiblePositions[0], possiblePositions[1], possiblePositions[2]]
+    return [possiblePositions[0], possiblePositions[1], possiblePositions[2]];
   }
   return possiblePositions;
 }
 
 function renderScoreTable(gameControl) {
-  const deskContainer = document.getElementById('desk-container');
+  const deskContainer = document.getElementById("desk-container");
   const players = gameControl.players;
-  const div = newElement('div', null, null, deskContainer, "score-table-div");
+  const div = newElement("div", null, null, deskContainer, "score-table-div");
   console.log(gameControl.scoreTable);
   for (const player of players) {
     const playerTotalScore = gameControl.scoreTable.total[player.name];
     const playerRoundScore = gameControl.scoreTable.currentRound[player.name];
-    const totalElement = newElement('h1', 'total-element', `${player.name} totaled of: ${playerTotalScore}`, div, null);
-    const currentElement = newElement('h1', 'current-element', `${player.name} current: ${playerRoundScore}`, div, null);
+    const totalElement = newElement(
+      "h1",
+      "total-element",
+      `${player.name} totaled of: ${playerTotalScore}`,
+      div,
+      null
+    );
+    const currentElement = newElement(
+      "h1",
+      "current-element",
+      `${player.name} current: ${playerRoundScore}`,
+      div,
+      null
+    );
   }
 }
 
 function yanivRender(gameControl) {
   // REVEAL EVERYONE CARDS
   // remove event listeners player deck and desks deck
-  // 
+  //
   const players = gameControl.players;
   for (const player of players) {
     player.turn = true;
   }
 
-  const deskContainer = document.getElementById('desk-container');
-  deskContainer.innerHTML = '';
-  const yanivButton = newElement('button', null, null, deskContainer, null);
+  const deskContainer = document.getElementById("desk-container");
+  deskContainer.innerHTML = "";
+  const yanivButton = newElement("button", null, null, deskContainer, null);
   for (const player of players) {
     createPlayerDiv(player, player.position, yanivButton, gameControl);
   }
@@ -309,11 +345,7 @@ function yanivRender(gameControl) {
   for (const player of players) {
     player.turn = false;
   }
-
-
-
 }
-
 
 // const winner: player = updateScoreTable(gameControl)
 
@@ -325,9 +357,18 @@ function setNewFirstTurn(gameControl) {
       player.winner = fulse;
     }
   }
-
 }
 
-
-export { addPlayer, getCheckedAvatar, renderWelcomePagePlayers, guessACard, startGame, createDesk, renderBoard, createPlayerDiv, updateScoreTable, playersCalculateFinshedRound, newRoundDealing };
-
+export {
+  addPlayer,
+  getCheckedAvatar,
+  renderWelcomePagePlayers,
+  guessACard,
+  startGame,
+  createDesk,
+  renderBoard,
+  createPlayerDiv,
+  updateScoreTable,
+  playersCalculateFinshedRound,
+  newRoundDealing,
+};
