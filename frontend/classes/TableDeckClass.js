@@ -7,30 +7,29 @@ export class TableDeck extends Deck {
     super(false);
     const signs = ["heart", "club", "diamond", "spade"];
     const ranksAndValues = [
-      ["Ace", 1],
-      ["2", 2],
-      ["3", 3],
-      ["4", 4],
-      ["5", 5],
-      ["6", 6],
-      ["7", 7],
-      ["8", 8],
-      ["9", 9],
-      ["10", 10],
-      ["Jack", 10],
-      ["Queen", 10],
-      ["King", 10],
+      ["Ace", 1, 1],
+      ["2", 2, 2],
+      ["3", 3, 3],
+      ["4", 4, 4],
+      ["5", 5, 5],
+      ["6", 6, 6],
+      ["7", 7, 7],
+      ["8", 8, 8],
+      ["9", 9, 9],
+      ["10", 10, 10],
+      ["Jack", 10, 11],
+      ["Queen", 10, 12],
+      ["King", 10, 13],
     ];
     for (const sign of signs) {
       for (const rankAndVal of ranksAndValues) {
         this.cards.push(
-          new Card(sign, rankAndVal[0], rankAndVal[1], false, true)
+          new Card(sign, rankAndVal[0], rankAndVal[1], rankAndVal[2], false, true)
         );
       }
-
-      this.cards.push(new Card("Joker", "BlackJoker", 0, true, true));
-      this.cards.push(new Card("Joker", "RedJoker", 0, true, true));
     }
+    this.cards.push(new Card("Joker", "BlackJoker", 0, 0, true, true));
+    this.cards.push(new Card("Joker", "RedJoker", 0, 0, true, true));
   }
 
   setCards(cards) {
