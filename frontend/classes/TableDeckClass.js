@@ -28,9 +28,8 @@ export class TableDeck extends Deck {
         );
       }
     }
-
-    this.cards.push(new Card("Joker", "BlackJoker", 0, true, true));
-    this.cards.push(new Card("Joker", "RedJoker", 0, true, true));
+    this.cards.push(new Card("Joker", "BlackJoker", 0, 0, true, true));
+    this.cards.push(new Card("Joker", "RedJoker", 0, 0, true, true));
   }
 
   setCards(cards) {
