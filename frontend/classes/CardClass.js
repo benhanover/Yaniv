@@ -7,7 +7,7 @@ export class Card {
     this.isJoker = isJoker;
     this.chosen = false;
     this.hidden = hidden;
-    this.id;
+    this.id = id;
   }
 
   cardName() {
