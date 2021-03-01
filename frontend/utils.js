@@ -196,8 +196,8 @@ function createPlayerDiv(player, playerPosition, yanivButton, gameControl) {
   // display only cards of the player that has the turn
   if (player.turn === true) {
 
-    // if (playerCardsSum <= 7) {
-    if (playerCardsSum <= 100) {
+    if (playerCardsSum <= 7) {
+      // if (playerCardsSum <= 100) {
       // yanivButton.classList.remove('yaniv-before-button');
       yanivButton.classList.add('yaniv');
       yanivButton.addEventListener('click', () => {
@@ -370,21 +370,26 @@ function checkValidChoose(card, playerDeck) {
     return card.chosen;
   });
 
-  const set = asyncValidationCase(chosenCards, card);
+  // const set = asyncValidationCase(playerDeck);
+  // if (set) {
+  //   console.log(set);
+  //   console.log(card);
+  //   // create a flag maybe;
+  //   if (set.includes(card)) {
+  //     for (const chosenCard of chosenCards) {
+  //       if (set.includes(chosenCard)) {
+  //         continue;
+  //       } else if (!set.includes(chosenCard)) {
+  //         break;
+  //       }
+  //       else {
+  //       }
+  //       return true;
+  //     }
+  //   }
+  // }
 
-  // create a flag maybe;
-  if (set.includes(card)) {
-    for (const chosenCard of chosenCards) {
-      if (set.includes(chosenCard)) {
-        continue;
-      } else if (!set.includes(chosenCard)) {
-        break;
-      }
-      else {
-      }
-      return true;
-    }
-  }
+
   // [2, 3, 4]
   // 3, 4
   // card

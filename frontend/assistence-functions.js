@@ -179,7 +179,7 @@ function validationCaseFour(chosenCards, card) {
 
 // Need to figure out how to get the playerDeck
 // need to add property to card that override chosen
-function asyncValidationCase(playerDeck, card) {
+function asyncValidationCase(playerDeck) {
   const setArray = getArrayWithHighestAppearance(playerDeck);
   // no sufficient suit apearances
   if (!setArray) {
@@ -193,25 +193,36 @@ function asyncValidationCase(playerDeck, card) {
     });
     let temp = [];
     // [1,0,3,4,7]
-
+    console.log(setArray);
     for (let index = 0; index < setArray.length; index++) {
-      if (index === setArray.length - 2 && setArray[index] === setArray[index + 1] - 1) {
-        temp.push(setArray[index].id);
-        temp.push(setArray[index + 1].id);
+      // if (setArray) {
+
+      // }
+      if (index === setArray.length - 2 && setArray[index] === setArray[index + 1].id - 1) {
+        temp.push(setArray[index]);
+        temp.push(setArray[index + 1]);
+        console.log("1");
         break;
       }
       else if (setArray[index].id === setArray[index + 1].id - 1) {
-        temp.push(setArray[index].id);
+        temp.push(setArray[index]);
+        console.log("2");
       }
       else {
-        if (temp.length < 3) {
-          temp = [];
+        if (temp.length > 1 && setArray[index - 1].id === setArray[index].id - 1) {
+          temp.push(setArray[index]);
+          console.log("4");
+          break;
         }
-        temp.push(setArray[index].id);
+        else if (temp.length < 3) {
+          temp = [];
+          console.log("3");
+        }
+
       }
-      return temp;
 
     }
+    return temp.length ? 0 : false;
     // make this cards override prop make sure to remove the overide
   }
 }
@@ -220,11 +231,10 @@ function asyncValidationCase(playerDeck, card) {
 function getArrayWithHighestAppearance(playerDeck) {
   const suits = ['heart', 'diamond', 'club', 'spade'];
   for (const suit of suits) {
-    const suitArr = playerDeck.filter(card => card.suit === suit);
+    const suitArr = playerDeck.filter((card) => { return card.suit === suit });
     if (suitArr.length > 2) return suitArr;
-
   }
-  // const jokers = 
+
   return false;
 }
 
