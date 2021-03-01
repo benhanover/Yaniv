@@ -1,10 +1,10 @@
 import { Deck, Player, PileDeck, TableDeck, Card } from './export-tomain.js';
 import { hidWelcomePage, randomOrderArray, catchElement, newElement, guessACard, getCheckedAvatar, switchTurn, updatePlayersCardsCounter, validationCaseOne, validationCaseTwo, validationCaseThree, validationCaseFour, asyncValidationCase } from './assistence-functions.js';
 
+
 // Event Listeners:
 
 function yanivListener(gameControl) {
-
   yanivRender(gameControl);///reveld cards , 
   theWinnerIs(gameControl);
   updateScoreTable(gameControl);// how is the winner , giving score , update
@@ -41,7 +41,6 @@ function theWinnerIs(gameControl) {
   return winner;
 }
 
-
 function startGame(gameControl) {
   hidWelcomePage();
   gameControl.players = randomOrderArray(gameControl.players);
@@ -51,7 +50,7 @@ function startGame(gameControl) {
 }
 
 function addPlayer(event, gameControl, addPlayerButton, startGameButton) {
-  const nameInput = document.getElementById('player-name');
+  const nameInput = document.getElementById("player-name");
   const newPlayerName = nameInput.value;
   nameInput.value = "";
   const playerDeck = gameControl.tableDeck.deal5Cards();
@@ -65,8 +64,7 @@ function addPlayer(event, gameControl, addPlayerButton, startGameButton) {
   renderWelcomePagePlayers(newPlayer);
   if (players.length == 2) {
     startGameButton.hidden = false;
-  }
-  else if (players.length === 4) {
+  } else if (players.length === 4) {
     addPlayerButton.hidden = true;
   }
 }
@@ -75,19 +73,19 @@ function addPlayer(event, gameControl, addPlayerButton, startGameButton) {
 // =========================
 // render added players to the welcome page
 function renderWelcomePagePlayers(player) {
-  const playerContainer = document.getElementById('players-container');
+  const playerContainer = document.getElementById("players-container");
   const playerName = player.name;
   const playerAvatar = player.avatar;
   const playerId = player.id;
 
-  const div = document.createElement('div');
+  const div = document.createElement("div");
   div.classList.add("welcome-player-div");
 
-  const elemnentIndex = document.createElement('span');
+  const elemnentIndex = document.createElement("span");
   elemnentIndex.innerText = playerId;
   div.appendChild(elemnentIndex);
 
-  const elementPlayerName = document.createElement('span');
+  const elementPlayerName = document.createElement("span");
   elementPlayerName.innerText = playerName;
   div.appendChild(elementPlayerName);
 
@@ -101,13 +99,15 @@ function renderWelcomePagePlayers(player) {
 function createDesk(gameControl) {
   const deskContainer = catchElement("desk-container");
   const pileDeck = newElement("div", "pile-deck", null, deskContainer);
-  pileDeck.innerText = gameControl.pileDeck.cards[gameControl.pileDeck.cards.length - 1].cardName();
-  pileDeck.style.color = 'white';
+  pileDeck.innerText = gameControl.pileDeck.cards[
+    gameControl.pileDeck.cards.length - 1
+  ].cardName();
+  pileDeck.style.color = "white";
   const tableDeck = newElement("div", "table-deck", null, deskContainer);
   pileDeck.addEventListener("click", (event) => {
     for (const player of gameControl.players) {
       if (player.turn) {
-        const chosensCount = document.querySelectorAll('.chosen').length;
+        const chosensCount = document.querySelectorAll(".chosen").length;
         if (chosensCount === 0) {
           alert("must choose a card");
           return;
@@ -126,7 +126,6 @@ function createDesk(gameControl) {
             switchTurn(gameControl);
             renderBoard(gameControl);
           }, 2000);
-
         }
       }
     }
@@ -135,8 +134,7 @@ function createDesk(gameControl) {
   tableDeck.addEventListener("click", (event) => {
     for (const player of gameControl.players) {
       if (player.turn) {
-
-        const chosensCount = document.querySelectorAll('.chosen').length;
+        const chosensCount = document.querySelectorAll(".chosen").length;
         if (chosensCount === 0) {
           alert("must choose a card");
           return;
@@ -160,14 +158,19 @@ function createDesk(gameControl) {
 }
 
 function renderBoard(gameControl) {
-  const deskContainer = document.getElementById('desk-container');
+  const deskContainer = document.getElementById("desk-container");
   // Reminder for security problem.
-  deskContainer.innerHTML = '';
-  const yanivButton = newElement('button', null, null, deskContainer, null);
+  deskContainer.innerHTML = "";
+  const yanivButton = newElement("button", null, null, deskContainer, null);
   const players = gameControl.players;
   const playerPositions = createPlayerPositions(players);
   for (let index = 0; index < players.length; index++) {
-    createPlayerDiv(players[index], playerPositions[index], yanivButton, gameControl);
+    createPlayerDiv(
+      players[index],
+      playerPositions[index],
+      yanivButton,
+      gameControl
+    );
   }
   createDesk(gameControl);
 }
@@ -180,38 +183,34 @@ function createPlayerDiv(player, playerPosition, yanivButton, gameControl) {
   const playerDeck = player.playerDeck;
   const playerCardsSum = player.cardsSum;
 
-  const deskContainer = catchElement('desk-container');
+  const deskContainer = catchElement("desk-container");
 
-  const playerContainer = newElement('div', 'player-container', null, deskContainer);
+  const playerContainer = newElement("div", "player-container", null, deskContainer);
   playerContainer.classList.add(playerPosition);
-  newElement('span', 'cards-sum-span', playerCardsSum, playerContainer);
 
-  const playerProfile = newElement('div', 'player-profile', null, playerContainer)
-  newElement('span', 'name-span', playerName, playerProfile);
+  const playerProfile = newElement("div", "player-profile", null, playerContainer);
+  newElement("span", "name-span", playerName, playerProfile);
   newElement("span", `avatar-img${playerAvatar.slice(-1)}`, null, playerProfile);
-  newElement('span', 'score-span', playerScore, playerProfile);
-  newElement('span', 'id-span', playerId, playerContainer);
-
+  newElement("span", "score-span", playerScore, playerProfile);
+  newElement("span", "id-span", playerId, playerContainer);
 
   // display only cards of the player that has the turn
   if (player.turn === true) {
-
-    if (playerCardsSum <= 7) {
-      // if (playerCardsSum <= 100) {
+    // if (playerCardsSum <= 7) {
+    if (playerCardsSum <= 100) {
       // yanivButton.classList.remove('yaniv-before-button');
-      yanivButton.classList.add('yaniv');
-      yanivButton.addEventListener('click', () => {
+      yanivButton.classList.add("yaniv");
+      yanivButton.addEventListener("click", () => {
         gameControl.yanivDeclaration = player;
         // console.log(player.name);
         yanivListener(gameControl);
-
       });
     } else {
-
       // yanivButton.classList.remove('yaniv');
-      yanivButton.classList.add('yaniv-before-button');
+      yanivButton.classList.add("yaniv-before-button");
     }
-    const playerCards = newElement('div', 'player-deck', null, playerContainer);
+    newElement('span', 'cards-sum-span', playerCardsSum, playerContainer);
+    const playerCards = newElement("div", "player-deck", null, playerContainer);
     for (let card of playerDeck) {
       const newCardElement = document.createElement("img");
       newCardElement.setAttribute(
@@ -220,22 +219,19 @@ function createPlayerDiv(player, playerPosition, yanivButton, gameControl) {
       );
       newCardElement.classList.add("player-card");
       newCardElement.addEventListener('click', (e) => {
-        if (!checkValidChoose(card, playerDeck)) {
-          return;
-        } else {
+        if (checkValidChoose(card, playerDeck)) {
           card.chooseToggle(newCardElement);
         }
       });
       playerCards.append(newCardElement);
     }
-
   }
 }
 
 // function sort(arr) {
 //   const newarr = [];
 //   for (let i=0 ; i++ ; i<arr.length) {
-//      if(arr.lenght)        
+//      if(arr.lenght)
 //   }
 // }
 // update scoretable with total score and current round score
@@ -276,8 +272,8 @@ function newRoundDealing(gameControl) {
       players: players,
       scoreTable: {
         total: {},
-        currentRound: {}
-      }
+        currentRound: {},
+      },
     };
     return gameControl;
   } else {
@@ -296,19 +292,24 @@ function newRoundDealing(gameControl) {
 }
 
 function createPlayerPositions(players) {
-  const possiblePositions = ['current-player', 'left-player', 'top-player', 'right-player']
+  const possiblePositions = [
+    "current-player",
+    "left-player",
+    "top-player",
+    "right-player",
+  ];
   if (players.length === 2) {
-    return [possiblePositions[0], possiblePositions[2]]
+    return [possiblePositions[0], possiblePositions[2]];
   } else if (players.length === 3) {
-    return [possiblePositions[0], possiblePositions[1], possiblePositions[2]]
+    return [possiblePositions[0], possiblePositions[1], possiblePositions[2]];
   }
   return possiblePositions;
 }
 
 function renderScoreTable(gameControl) {
-  const deskContainer = document.getElementById('desk-container');
+  const deskContainer = document.getElementById("desk-container");
   const players = gameControl.players;
-  const div = newElement('div', null, null, deskContainer, "score-table-div");
+  const div = newElement("div", null, null, deskContainer, "score-table-div");
   console.log(gameControl.scoreTable);
   for (const player of players) {
     const playerTotalScore = gameControl.scoreTable.total[player.name];
@@ -321,24 +322,17 @@ function renderScoreTable(gameControl) {
 function yanivRender(gameControl) {
   // REVEAL EVERYONE CARDS
   // remove event listeners player deck and desks deck
-  // 
+  //
   const players = gameControl.players;
   for (const player of players) {
     player.turn = true;
   }
 
   renderBoard(gameControl);
-
-
   for (const player of players) {
     player.turn = false;
-
   }
-
-
-
 }
-
 
 // const winner: player = updateScoreTable(gameControl)
 
@@ -421,7 +415,3 @@ function checkValidChoose(card, playerDeck) {
 // true
 // - same id
 // - continue to be consectuive numbers with the same sign
-
-
-
-

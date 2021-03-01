@@ -95,6 +95,7 @@ body {
   }
 
   .table-deck {
+    // background-image: url(./assets/yanivdeck.jpeg);
     background-image: url(./assets/gray_back.png);
     background-size: cover;
     width: 6rem;
@@ -147,10 +148,7 @@ body {
   .player-deck {
     display: flex;
     align-items: center;
-
-    .player-card {
-      padding: 0.2rem;
-    }
+    justify-content: space-evenly;
   }
   .player-card {
     width: 10%;
@@ -174,7 +172,7 @@ body {
   }
   .player-deck {
     display: flex;
-    align-items: center;
+    flex-direction: column;
   }
   .player-card {
     transform: rotate(90deg);
@@ -202,10 +200,7 @@ body {
   .player-deck {
     display: flex;
     align-items: center;
-
-    .player-card {
-      padding: 0.2rem;
-    }
+    justify-content: space-evenly;
   }
   .player-card {
     width: 10%;
@@ -229,7 +224,7 @@ body {
   }
   .player-deck {
     display: flex;
-    align-items: center;
+    flex-direction: column;
   }
   .player-card {
     transform: rotate(90deg);
