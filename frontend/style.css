@@ -202,7 +202,7 @@ body {
 }
 
 .current-player .cards-sum-span {
-  background-color: orange;
+  background-color: #b48f4b;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
